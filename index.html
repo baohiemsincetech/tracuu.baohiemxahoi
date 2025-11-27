@@ -217,14 +217,14 @@
     .home-header {
       margin-top: 0;
       margin-bottom: 1.5rem;
-      padding: 1.5rem 0.75rem;
-      padding-left: 0.5rem;
+      padding: 1.5rem 0.5rem;
       background: linear-gradient(135deg, rgba(139, 92, 246, 0.08) 0%, rgba(6, 182, 212, 0.08) 100%);
       border-radius: 1.25rem;
       border: 1px solid rgba(139, 92, 246, 0.15);
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08), 0 4px 12px rgba(139, 92, 246, 0.1);
       position: relative;
       overflow: hidden;
+      box-sizing: border-box;
     }
     
     .home-header::before {
@@ -255,7 +255,7 @@
       display: flex;
       flex-direction: row;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.2rem;
       margin-bottom: 0.75rem;
       padding: 0;
       background: transparent !important;
@@ -266,6 +266,7 @@
       overflow: visible;
       width: 100%;
       box-sizing: border-box;
+      max-width: 100%;
     }
 
     .company-logo-with-name .logo-image {
@@ -285,11 +286,14 @@
       justify-content: center;
       gap: 0.125rem;
       min-width: 0;
+      max-width: none;
       box-sizing: border-box;
+      overflow: visible;
+      width: auto;
     }
 
     .company-name-english {
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       font-weight: 700;
       line-height: 1.2;
       white-space: nowrap;
@@ -302,10 +306,12 @@
       animation: gradientShift 3s ease-in-out infinite;
       text-align: left;
       display: block;
+      overflow: visible;
+      box-sizing: border-box;
     }
 
     .company-name-chinese {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       font-weight: 600;
       line-height: 1.2;
       white-space: nowrap;
@@ -318,6 +324,8 @@
       animation: gradientShift 3s ease-in-out infinite 0.5s;
       text-align: left;
       display: block;
+      overflow: visible;
+      box-sizing: border-box;
     }
 
     @keyframes gradientShift {
@@ -1638,30 +1646,30 @@
     /* Mobile Optimizations - Small screens */
     @media (max-width: 400px) {
       .company-logo-with-name {
-        flex-direction: row;
-        gap: 0.5rem;
+        gap: 0.2rem;
       }
       
       .company-logo-with-name .logo-image {
         height: 45px;
-        max-width: 70px;
+        max-width: 60px;
         flex-shrink: 0;
       }
       
       .company-name-home {
-        flex: 1;
-        min-width: 0;
-        align-items: flex-start;
+        max-width: none !important;
+        overflow: visible !important;
       }
       
       .company-name-english {
-        font-size: 0.6rem !important;
-        text-align: left !important;
+        font-size: 0.55rem !important;
+        white-space: nowrap !important;
+        overflow: visible !important;
       }
       
       .company-name-chinese {
-        font-size: 0.65rem !important;
-        text-align: left !important;
+        font-size: 0.6rem !important;
+        white-space: nowrap !important;
+        overflow: visible !important;
       }
     }
 
@@ -1721,43 +1729,35 @@
       
       /* Fix company name on mobile */
       .company-logo-with-name {
-        flex-direction: row;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0;
-        margin-left: auto;
-        margin-right: auto;
-        justify-content: center;
+        gap: 0.2rem;
+        justify-content: flex-start;
         width: 100%;
-        max-width: 100%;
-        box-sizing: border-box;
+        overflow: visible;
       }
       
       .company-logo-with-name .logo-image {
         height: 50px;
-        max-width: 90px;
+        max-width: 75px;
         flex-shrink: 0;
       }
       
       .company-name-home {
-        flex: 0 1 auto;
-        max-width: calc(100% - 100px);
+        flex: 1;
+        max-width: none !important;
         min-width: 0;
-      }
-      
-      .company-logo-with-name .logo-image {
-        height: 50px;
-        max-width: 90px;
+        overflow: visible !important;
       }
       
       .company-name-english {
-        font-size: 0.65rem !important;
+        font-size: 0.6rem !important;
         white-space: nowrap !important;
+        overflow: visible !important;
       }
       
       .company-name-chinese {
-        font-size: 0.7rem !important;
+        font-size: 0.65rem !important;
         white-space: nowrap !important;
+        overflow: visible !important;
       }
       
       .section {
@@ -1853,17 +1853,31 @@
 
     /* Extra small mobile screens */
     @media (max-width: 360px) {
+      .company-logo-with-name {
+        gap: 0.2rem;
+      }
+      
       .company-logo-with-name .logo-image {
-        height: 45px;
-        max-width: 75px;
+        height: 40px;
+        max-width: 55px;
+        flex-shrink: 0;
+      }
+      
+      .company-name-home {
+        max-width: none !important;
+        overflow: visible !important;
       }
       
       .company-name-english {
-        font-size: 0.6rem !important;
+        font-size: 0.5rem !important;
+        white-space: nowrap !important;
+        overflow: visible !important;
       }
       
       .company-name-chinese {
-        font-size: 0.65rem !important;
+        font-size: 0.55rem !important;
+        white-space: nowrap !important;
+        overflow: visible !important;
       }
       
       .home-header {
