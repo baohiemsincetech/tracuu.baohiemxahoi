@@ -1,0 +1,2874 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="Thông tin công ty và tra cứu tình trạng chốt sổ BHXH">
+  <title>Công ty & Tra cứu BHXH</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    /* Allow text selection for content */
+    p, span, h1, h2, h3, h4, h5, h6, label, input, textarea {
+      -webkit-user-select: text;
+      -moz-user-select: text;
+      -ms-user-select: text;
+      user-select: text;
+    }
+
+    /* Hide scrollbar - consolidated */
+    *, *::-webkit-scrollbar {
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    
+    *::-webkit-scrollbar {
+      display: none;
+      width: 0;
+      height: 0;
+    }
+
+    :root {
+      --primary-color: #06B6D4;
+      --primary-dark: #1E40AF;
+      --primary-light: #22D3EE;
+      --primary-ultra-light: #E0F2FE;
+      --secondary-color: #3B82F6;
+      --accent-color: #EC4899;
+      --background: #F9FAFB;
+      --surface: #FFFFFF;
+      --text-primary: #1F2937;
+      --text-secondary: #6B7280;
+      --border-color: #E5E7EB;
+      --success: #10B981;
+      --warning: #F59E0B;
+      --error: #EF4444;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      --transition-3d: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-fast: all 0.2s ease;
+    }
+
+    html {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    }
+    
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow-x: hidden !important;
+      overflow-y: hidden !important;
+      position: fixed;
+      width: 100%;
+    }
+
+    /* Font family - consistent across ALL elements - Inter font */
+    *, *::before, *::after,
+    html, body,
+    input, textarea, select, button, 
+    label, span, div, p, 
+    h1, h2, h3, h4, h5, h6, 
+    a, li, ul, ol, 
+    td, th, table,
+    strong, em, b, i,
+    section, article, aside, header, footer, nav, main,
+    .greeting, .section-title, .lookup-title, .company-title,
+    .service-title, .group-name, .form-label, .stat-label,
+    .progress-title, .subtitle, .lookup-subtitle {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !important;
+      -webkit-font-smoothing: antialiased !important;
+      -moz-osx-font-smoothing: grayscale !important;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      font-size: 14px;
+      perspective: 1200px;
+      perspective-origin: center center;
+      position: relative;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+    }
+
+    #app {
+      height: 100vh;
+      width: 100%;
+      max-width: 428px;
+      margin: 0 auto;
+      background: var(--background);
+      position: relative;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      overflow-x: hidden !important;
+      overflow-y: hidden !important;
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+    }
+
+
+    /* Main Layout */
+    .layout {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: var(--background);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .main-content {
+      flex: 1;
+      padding-bottom: 85px;
+      overflow-y: auto !important;
+      overflow-x: hidden !important;
+      -webkit-overflow-scrolling: touch;
+      height: calc(100vh - 85px);
+      width: 100%;
+      box-sizing: border-box;
+      position: relative;
+      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none; /* IE and Edge */
+    }
+
+    .main-content::-webkit-scrollbar {
+      display: none; /* Chrome, Safari, Opera */
+      width: 0;
+      height: 0;
+    }
+
+    /* Home Page */
+    .home {
+      padding: 0.5rem 0.75rem;
+      padding-top: 0.25rem;
+      padding-bottom: 5.5rem;
+      padding-left: 0.5rem;
+      padding-right: 0.75rem;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    /* Company Logo */
+    .company-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+      padding: 0.25rem;
+      background: transparent !important;
+      border-radius: 0.75rem;
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+
+    .logo-image {
+      width: auto;
+      height: 80px;
+      max-width: 200px;
+      object-fit: contain;
+      flex-shrink: 0;
+      display: block;
+      position: relative;
+      z-index: 1;
+    }
+
+    
+    
+    .logo-text {
+      display: none !important;
+    }
+
+    .logo-text-chinese {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--primary-dark);
+      line-height: 1.2;
+    }
+
+    .logo-text-english {
+      font-size: 0.875rem;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .logo-text-since {
+      color: var(--primary-dark);
+    }
+
+    .logo-text-tech {
+      color: var(--primary-color);
+    }
+
+    .home-header {
+      margin-top: 0;
+      margin-bottom: 1.5rem;
+      padding: 1.5rem 0.75rem;
+      padding-left: 0.5rem;
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.08) 0%, rgba(6, 182, 212, 0.08) 100%);
+      border-radius: 1.25rem;
+      border: 1px solid rgba(139, 92, 246, 0.15);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08), 0 4px 12px rgba(139, 92, 246, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .home-header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    
+    .home-header::after {
+      content: '';
+      position: absolute;
+      bottom: -30%;
+      left: -10%;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(6, 182, 212, 0.1) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .company-logo-with-name {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+      padding: 0;
+      background: transparent !important;
+      border-radius: 0.75rem;
+      position: relative;
+      z-index: 1;
+      justify-content: flex-start;
+      overflow: visible;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .company-logo-with-name .logo-image {
+      flex-shrink: 0;
+      height: 65px;
+      max-width: 120px;
+      width: auto;
+      display: block;
+      object-fit: contain;
+    }
+
+    .company-name-home {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 0.125rem;
+      min-width: 0;
+      box-sizing: border-box;
+    }
+
+    .company-name-english {
+      font-size: 0.75rem;
+      font-weight: 700;
+      line-height: 1.2;
+      white-space: nowrap;
+      word-break: keep-all;
+      background: linear-gradient(90deg, var(--primary-dark) 0%, var(--primary-color) 50%, var(--primary-dark) 100%);
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradientShift 3s ease-in-out infinite;
+      text-align: left;
+      display: block;
+    }
+
+    .company-name-chinese {
+      font-size: 0.8rem;
+      font-weight: 600;
+      line-height: 1.2;
+      white-space: nowrap;
+      word-break: keep-all;
+      background: linear-gradient(90deg, var(--primary-dark) 0%, var(--primary-color) 50%, var(--primary-dark) 100%);
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradientShift 3s ease-in-out infinite 0.5s;
+      text-align: left;
+      display: block;
+    }
+
+    @keyframes gradientShift {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    .greeting {
+      font-size: 1.75rem;
+      font-weight: 800;
+      background: linear-gradient(90deg, var(--primary-dark) 0%, var(--primary-color) 50%, var(--primary-dark) 100%);
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+      animation: gradientShift 3s ease-in-out infinite;
+      position: relative;
+      z-index: 1;
+    }
+
+    .subtitle {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+      position: relative;
+      z-index: 1;
+      opacity: 0.85;
+    }
+
+    .progress-card {
+      background: linear-gradient(135deg, var(--surface) 0%, rgba(255, 255, 255, 0.95) 100%);
+      border-radius: 1.125rem;
+      padding: 1.125rem;
+      margin-bottom: 1.25rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1), 0 4px 12px rgba(139, 92, 246, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+      transition: var(--transition-3d);
+      border: 2px solid rgba(139, 92, 246, 0.15);
+      transform-style: preserve-3d;
+      transform: translateZ(0);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .progress-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-color) 0%, var(--primary-dark) 50%, var(--primary-color) 100%);
+      background-size: 200% 100%;
+      animation: gradientShift 3s ease-in-out infinite;
+    }
+
+    .progress-card:hover {
+      box-shadow: 0 20px 40px rgba(139, 92, 246, 0.25), 0 8px 20px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+      border-color: var(--primary-color);
+      background: linear-gradient(135deg, rgba(237, 233, 254, 0.5) 0%, rgba(255, 255, 255, 0.98) 100%);
+      transform: translateZ(15px) rotateX(2deg);
+    }
+
+    .progress-card:hover .progress-title,
+    .progress-card:active .progress-title {
+      color: var(--primary-dark) !important;
+      font-weight: 700;
+    }
+
+    .progress-card:active {
+      box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+      transform: translateZ(5px) rotateX(1deg);
+    }
+
+    .progress-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .progress-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--primary-dark);
+      flex: 1;
+      margin-right: 1rem;
+    }
+
+    .progress-circle {
+      position: relative;
+      width: 80px;
+      height: 80px;
+      flex-shrink: 0;
+    }
+
+    .progress-ring {
+      transform: rotate(-90deg);
+    }
+
+    .progress-percentage {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: none;
+    }
+
+    .view-button {
+      width: 100%;
+      padding: 0.875rem;
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+      color: white;
+      border: none;
+      border-radius: 0.875rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition-3d);
+      position: relative;
+      transform-style: preserve-3d;
+      transform: translateZ(0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      box-shadow: 0 8px 20px rgba(139, 92, 246, 0.3);
+    }
+
+    .view-button:hover {
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);
+      color: white;
+      box-shadow: 0 12px 30px rgba(139, 92, 246, 0.5);
+      transform: translateZ(10px) rotateX(-3deg);
+    }
+
+    .view-button:active {
+      box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+      transform: translateZ(6px) rotateX(-1deg);
+    }
+    
+    .view-button svg {
+      transition: transform 0.3s ease;
+    }
+    
+    .view-button:hover svg {
+      transform: translateX(4px);
+    }
+
+    .section {
+      margin-bottom: 2rem;
+    }
+    
+    /* Stats Section */
+    .home-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .stat-mini-card {
+      background: linear-gradient(135deg, var(--surface) 0%, rgba(255, 255, 255, 0.95) 100%);
+      border-radius: 1rem;
+      padding: 1rem;
+      text-align: center;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(139, 92, 246, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+      border: 2px solid rgba(139, 92, 246, 0.1);
+      transition: var(--transition-3d);
+      transform-style: preserve-3d;
+      transform: translateZ(0);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .stat-mini-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .stat-mini-card:hover {
+      transform: translateY(-4px) translateZ(10px);
+      box-shadow: 0 12px 30px rgba(139, 92, 246, 0.2), 0 4px 12px rgba(0, 0, 0, 0.1);
+      border-color: var(--primary-color);
+      background: linear-gradient(135deg, rgba(237, 233, 254, 0.4) 0%, rgba(255, 255, 255, 0.98) 100%);
+    }
+    
+    .stat-mini-card:hover::before {
+      opacity: 1;
+    }
+    
+    .stat-mini-value {
+      font-size: 1.5rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.25rem;
+      line-height: 1.2;
+    }
+    
+    .stat-mini-label {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+      line-height: 1.3;
+    }
+
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, var(--primary-dark) 0%, var(--primary-color) 50%, var(--primary-dark) 100%);
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+      animation: gradientShift 3s ease-in-out infinite;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid rgba(139, 92, 246, 0.2);
+    }
+
+    .services-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .service-card {
+      background: linear-gradient(135deg, var(--surface) 0%, rgba(255, 255, 255, 0.95) 100%);
+      border-radius: 1.125rem;
+      padding: 1.125rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      cursor: pointer;
+      transition: var(--transition-3d);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1), 0 2px 8px rgba(139, 92, 246, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+      position: relative;
+      border: 2px solid rgba(139, 92, 246, 0.12);
+      transform-style: preserve-3d;
+      transform: translateZ(0);
+      overflow: hidden;
+    }
+    
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(180deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .service-card:hover {
+      box-shadow: 0 12px 32px rgba(139, 92, 246, 0.3), 0 6px 16px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+      border-color: var(--primary-color);
+      background: linear-gradient(135deg, rgba(237, 233, 254, 0.6) 0%, rgba(255, 255, 255, 0.98) 100%);
+      transform: translateZ(15px) rotateY(3deg) rotateX(-2deg);
+    }
+    
+    .service-card:hover::before {
+      opacity: 1;
+    }
+
+    .service-card:active {
+      box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+      transform: translateZ(6px) rotateY(1deg);
+    }
+
+    .service-card:active .service-title {
+      color: var(--text-primary) !important;
+      font-weight: 700;
+    }
+
+    .service-card:active .service-subtitle {
+      color: var(--text-primary) !important;
+    }
+
+    .service-card:hover .service-title {
+      color: var(--text-primary) !important;
+      font-weight: 700;
+    }
+
+    .service-card:hover .service-subtitle {
+      color: var(--text-primary) !important;
+    }
+
+    .service-icon {
+      font-size: 2.25rem;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(6, 182, 212, 0.1) 100%);
+      border-radius: 1rem;
+      flex-shrink: 0;
+      transition: var(--transition-3d);
+      transform-style: preserve-3d;
+      box-shadow: 0 4px 12px rgba(139, 92, 246, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(139, 92, 246, 0.2);
+    }
+
+    .service-card:hover .service-icon {
+      transform: translateZ(15px) rotateY(10deg);
+      box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+    }
+
+    .service-info {
+      flex: 1;
+    }
+
+    .service-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--primary-dark);
+      margin-bottom: 0.25rem;
+    }
+
+    .service-subtitle {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    .service-card svg {
+      color: var(--text-secondary);
+      flex-shrink: 0;
+    }
+
+    .groups-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+    }
+
+    .group-card {
+      background: var(--surface);
+      border-radius: 1rem;
+      padding: 1rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), 0 2px 6px rgba(139, 92, 246, 0.2);
+      transition: all 0.3s ease;
+      border: 1px solid rgba(139, 92, 246, 0.1);
+    }
+
+    .group-card:hover {
+      box-shadow: 0 8px 20px rgba(139, 92, 246, 0.3), 0 4px 10px rgba(0, 0, 0, 0.15);
+      border-color: var(--primary-light);
+      background: linear-gradient(135deg, var(--surface) 0%, rgba(237, 233, 254, 0.3) 100%);
+    }
+
+    .group-card:hover .group-name,
+    .group-card:active .group-name {
+      color: var(--text-primary) !important;
+      font-weight: 700;
+    }
+
+    .group-card:hover .group-items,
+    .group-card:active .group-items {
+      color: var(--text-primary) !important;
+    }
+
+    .group-card:active {
+      box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+    }
+
+    .group-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .group-icon {
+      font-size: 1.5rem;
+      transition: var(--transition-3d);
+      transform-style: preserve-3d;
+    }
+
+    .group-card:hover .group-icon {
+      transform: translateZ(15px) rotateY(-10deg);
+    }
+
+    .group-name {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--primary-dark);
+    }
+
+    .group-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .group-items {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    .group-progress-bar {
+      width: 100%;
+      height: 6px;
+      background: var(--border-color);
+      border-radius: 3px;
+      overflow: hidden;
+      transform: translateZ(0);
+    }
+
+    .group-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
+      border-radius: 3px;
+      transition: width 0.3s ease, transform 0.3s;
+      transform: translateZ(0);
+    }
+
+    .group-card:hover .group-progress-fill {
+      background: linear-gradient(90deg, var(--primary-dark), var(--primary-color));
+    }
+
+    .group-percentage {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--primary-color);
+    }
+
+    /* BHXH Lookup Page */
+    .bhxh-lookup {
+      padding: 0.75rem 0.75rem;
+      padding-bottom: 5.5rem;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .lookup-header {
+      text-align: center;
+      margin-bottom: 0.75rem;
+      padding: 1rem 0.75rem;
+      background: var(--surface);
+      border-radius: 1rem;
+      border: 1px solid var(--border-color);
+      color: var(--text-primary);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .lookup-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin: 0;
+      line-height: 1.2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.125rem;
+    }
+    
+    .lookup-title span {
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: block;
+      line-height: 1.4;
+    }
+
+    .lookup-title span:nth-child(1) {
+      font-size: 1.4rem;
+    }
+
+    .lookup-title span:nth-child(2) {
+      font-size: 1.6rem;
+      font-weight: 800;
+    }
+
+    .lookup-subtitle {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    .lookup-form {
+      background: var(--surface);
+      border-radius: 1rem;
+      padding: 1rem;
+      box-shadow: var(--shadow);
+      margin-bottom: 1rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--primary-dark);
+      margin-bottom: 0.5rem;
+    }
+
+    .required {
+      color: var(--error);
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 0.875rem;
+      border: 2px solid var(--border-color);
+      border-radius: 0.75rem;
+      font-size: 1rem;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      background: var(--surface);
+      color: var(--text-primary);
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+    }
+
+    .form-input::placeholder {
+      color: var(--text-secondary);
+      opacity: 0.6;
+    }
+
+    .error-message {
+      display: none;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 1.25rem;
+      background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+      border: 3px solid #F59E0B;
+      border-left: 6px solid #EF4444;
+      border-radius: 1rem;
+      color: #92400E;
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin-bottom: 1.25rem;
+      visibility: visible;
+      opacity: 1;
+      box-shadow: 0 8px 25px rgba(245, 158, 11, 0.4), 0 4px 12px rgba(239, 68, 68, 0.3);
+      position: relative;
+    }
+    
+    .error-message::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(135deg, #EF4444, #F59E0B);
+      border-radius: 1rem;
+      z-index: -1;
+      opacity: 0.3;
+    }
+    
+    .error-message-icon {
+      font-size: 1.5rem;
+      line-height: 1;
+    }
+    
+    .error-message-text {
+      font-weight: 600;
+      text-align: justify;
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
+      text-indent: 1rem;
+    }
+
+    .error-message:not([style*="display: none"]) {
+      display: flex !important;
+    }
+
+    .error-message.hidden {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+    }
+
+
+    .error-icon {
+      font-size: 1.2rem;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 1rem;
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+      color: white;
+      border: none;
+      border-radius: 0.75rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: var(--transition-3d);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+      transform-style: preserve-3d;
+      transform: translateZ(0);
+    }
+
+    .submit-btn:hover:not(:disabled) {
+      box-shadow: 0 12px 30px rgba(139, 92, 246, 0.5);
+      filter: brightness(1.1);
+      transform: translateZ(10px) rotateX(-4deg);
+    }
+
+    .submit-btn:active:not(:disabled) {
+      box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+      filter: brightness(0.95);
+      transform: translateZ(5px) rotateX(-2deg);
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+
+    .result-card {
+      background: var(--surface);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      box-shadow: var(--shadow-lg);
+      margin-bottom: 2rem;
+      transition: var(--transition-3d);
+      transform-style: preserve-3d;
+      transform: translateZ(0);
+    }
+
+    .result-card:hover {
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+      transform: translateZ(10px) rotateX(2deg);
+    }
+    
+    .result-card:hover .completion-notice {
+      opacity: 1 !important;
+      filter: none !important;
+    }
+
+    .result-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--border-color);
+    }
+
+    .result-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .status-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      border-radius: 2rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+
+    .status-completed {
+      background: #D1FAE5;
+      color: #065F46;
+    }
+
+    .status-processing {
+      background: #FEF3C7;
+      color: #92400E;
+    }
+
+    .status-pending {
+      background: #E5E7EB;
+      color: #374151;
+    }
+
+    .result-content {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .result-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .result-label {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .result-value {
+      font-size: 0.9rem;
+      color: var(--text-primary);
+      font-weight: 600;
+      text-align: right;
+    }
+
+    .result-value.highlight {
+      color: var(--primary-color);
+      font-size: 1rem;
+    }
+
+    /* Completion Notice - Thông báo chốt sổ hoàn thành */
+    .completion-notice {
+      margin-bottom: 1.25rem;
+      padding: 1.25rem;
+      background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+      border-radius: 1rem;
+      border-left: 5px solid #34D399;
+      box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4), 0 4px 12px rgba(5, 150, 105, 0.3);
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      align-items: flex-start;
+      position: relative;
+      overflow: visible;
+      z-index: 10;
+      opacity: 1 !important;
+      filter: none !important;
+      pointer-events: auto;
+    }
+    
+    .completion-notice:hover,
+    .result-card:hover .completion-notice,
+    .result-content:hover .completion-notice {
+      opacity: 1 !important;
+      filter: none !important;
+      background: linear-gradient(135deg, #10B981 0%, #059669 100%) !important;
+      box-shadow: 0 10px 30px rgba(16, 185, 129, 0.5), 0 5px 15px rgba(5, 150, 105, 0.4);
+    }
+
+
+    .notice-icon {
+      font-size: 1.5rem;
+      line-height: 1;
+      display: block;
+      color: white;
+    }
+    
+    .notice-icon svg {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+
+    .notice-content {
+      flex: 1;
+      color: #FFFFFF !important;
+      position: relative;
+      z-index: 2;
+      opacity: 1 !important;
+    }
+
+    .notice-title {
+      display: none;
+    }
+
+    .notice-text {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: #FFFFFF !important;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+      font-weight: 600;
+      opacity: 1 !important;
+      text-align: justify;
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
+      text-indent: 1rem;
+      width: 100%;
+    }
+    
+    .completion-notice:hover .notice-content,
+    .completion-notice:hover .notice-title,
+    .completion-notice:hover .notice-text,
+    .result-card:hover .completion-notice .notice-content,
+    .result-card:hover .completion-notice .notice-title,
+    .result-card:hover .completion-notice .notice-text {
+      color: #FFFFFF !important;
+      opacity: 1 !important;
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3) !important;
+      filter: none !important;
+    }
+    
+    .notice-icon {
+      opacity: 1 !important;
+    }
+    
+    .completion-notice:hover .notice-icon,
+    .result-card:hover .completion-notice .notice-icon {
+      opacity: 1 !important;
+      color: white !important;
+    }
+
+    /* Company Info Page */
+    .company-info {
+      padding: 1rem 1rem;
+      padding-bottom: 1rem;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .company-header {
+      text-align: center;
+      margin-bottom: 1.25rem;
+      padding: 1.25rem;
+      background: var(--surface);
+      border-radius: 1rem;
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-lg);
+      transition: var(--transition-3d);
+      transform-style: preserve-3d;
+      transform: translateZ(0);
+    }
+
+    .company-header:hover {
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+      border-color: var(--primary-light);
+      transform: translateZ(8px) rotateX(-2deg);
+    }
+
+    .company-header .company-logo .logo-image {
+      height: 140px;
+      max-width: 320px;
+      width: auto;
+    }
+
+    .company-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, var(--primary-dark) 0%, var(--primary-color) 50%, var(--primary-dark) 100%);
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.375rem;
+      animation: gradientShift 3s ease-in-out infinite;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .stat-card {
+      background: var(--surface);
+      border-radius: 1rem;
+      padding: 1rem 0.75rem;
+      text-align: center;
+      box-shadow: var(--shadow);
+      transition: var(--transition-3d);
+      transform-style: preserve-3d;
+      transform: translateZ(0);
+    }
+
+    .stat-card:hover {
+      box-shadow: 0 12px 30px rgba(139, 92, 246, 0.3), 0 6px 15px rgba(0, 0, 0, 0.15);
+      background: linear-gradient(135deg, var(--surface) 0%, rgba(237, 233, 254, 0.3) 100%);
+      transform: translateZ(10px) rotateY(2deg) rotateX(-2deg);
+    }
+
+    .stat-card:active {
+      box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+      transform: translateZ(5px) rotateY(1deg);
+    }
+
+    .stat-card:hover .stat-value,
+    .stat-card:active .stat-value {
+      color: var(--primary-dark) !important;
+    }
+
+    .stat-card:hover .stat-label,
+    .stat-card:active .stat-label {
+      color: var(--text-primary) !important;
+    }
+
+    .stat-icon {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      transition: var(--transition-3d);
+      transform-style: preserve-3d;
+    }
+
+    .stat-card:hover .stat-icon {
+      transform: translateZ(15px) rotateY(8deg);
+    }
+
+    .stat-value {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      margin-bottom: 0.25rem;
+    }
+
+    .stat-label {
+      font-size: 0.875rem;
+      color: var(--primary-dark);
+      font-weight: 500;
+    }
+
+    .info-section-card {
+      background: var(--surface);
+      border-radius: 1rem;
+      padding: 1.25rem;
+      box-shadow: var(--shadow);
+      border-left: 4px solid var(--primary-color);
+      margin-bottom: 1rem;
+      transition: var(--transition-3d);
+      transform-style: preserve-3d;
+      transform: translateZ(0);
+    }
+    
+    .info-section-card:last-child {
+      margin-bottom: 0;
+    }
+
+    .info-section-card:hover {
+      box-shadow: 0 12px 30px rgba(139, 92, 246, 0.25), 0 6px 15px rgba(0, 0, 0, 0.1);
+      border-left-width: 5px;
+      background: linear-gradient(135deg, var(--surface) 0%, rgba(237, 233, 254, 0.2) 100%);
+      transform: translateZ(8px) rotateY(-2deg);
+    }
+
+    .info-section-card:active {
+      box-shadow: var(--shadow);
+      transform: translateZ(4px);
+    }
+
+    .info-section-card:hover .section-content,
+    .info-section-card:active .section-content {
+      color: var(--text-primary) !important;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.875rem;
+    }
+
+    .section-icon {
+      font-size: 1.5rem;
+      transition: var(--transition-3d);
+      transform-style: preserve-3d;
+    }
+
+    .info-section-card:hover .section-icon {
+      transform: translateZ(10px) rotateY(5deg);
+    }
+
+    .section-content {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+    
+    .section-content p {
+      margin-bottom: 0;
+      text-align: justify;
+    }
+    
+    .section-content p:not(:last-child) {
+      margin-bottom: 0.75rem;
+    }
+
+    /* Timeline Styles */
+    .timeline-container {
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      margin-top: 0;
+      transition: max-height 0.3s ease-out, opacity 0.2s ease-out;
+    }
+
+    .timeline-container.expanded {
+      max-height: 5000px;
+      opacity: 1;
+      transition: max-height 0.4s ease-in, opacity 0.2s ease-in;
+    }
+
+    .timeline-toggle {
+      cursor: pointer;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      padding: 0.625rem 0 0.375rem;
+      margin-top: 0.625rem;
+      border-top: 1px solid var(--border-color);
+      transition: all 0.3s ease;
+    }
+
+    .timeline-toggle:hover {
+      color: var(--primary-dark);
+    }
+
+    .timeline-toggle-icon {
+      font-size: 1rem;
+      transition: transform 0.3s ease;
+      color: var(--primary-color);
+      flex-shrink: 0;
+    }
+
+    .timeline-container.expanded ~ .timeline-toggle .timeline-toggle-icon {
+      transform: rotate(180deg);
+    }
+
+    .timeline-toggle-text {
+      font-size: 0.9rem;
+      color: var(--primary-color);
+      font-weight: 600;
+    }
+
+    .timeline {
+      position: relative;
+      padding-left: 1.5rem;
+      margin-top: 0.75rem;
+      padding-top: 0.5rem;
+      padding-bottom: 0.25rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0.5rem;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--primary-color), var(--primary-dark));
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 1.25rem;
+      padding-left: 1.5rem;
+    }
+    
+    .timeline-item:last-child {
+      margin-bottom: 0.5rem;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -0.625rem;
+      top: 0.25rem;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--primary-color);
+      border: 3px solid var(--surface);
+      box-shadow: 0 0 0 2px var(--primary-color);
+    }
+
+    .timeline-year {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      display: inline-block;
+      background: linear-gradient(90deg, var(--primary-dark) 0%, var(--primary-color) 50%, var(--primary-dark) 100%);
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.3;
+      animation: gradientShift 3s ease-in-out infinite;
+    }
+
+    .timeline-content {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      text-align: justify;
+    }
+
+    .timeline-content strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+
+    /* Bottom Navigation */
+    .bottom-nav {
+      position: fixed !important;
+      bottom: 0 !important;
+      left: 50% !important;
+      transform: translateX(-50%) !important;
+      width: 100%;
+      max-width: 428px;
+      box-sizing: border-box;
+      background: var(--surface);
+      border-top: 1px solid var(--border-color);
+      display: flex !important;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding: 0.75rem 0 1rem;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+      z-index: 9999 !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+    }
+
+    .nav-section {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      padding: 0 0.5rem;
+    }
+
+    .nav-section-center {
+      position: absolute;
+      left: 50%;
+      bottom: 1rem;
+      margin-left: -28px;
+      z-index: 101;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.375rem;
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+      cursor: pointer;
+      padding: 0.5rem 0.25rem;
+      transition: var(--transition-3d);
+      border-radius: 0.5rem;
+      flex: 1;
+      position: relative;
+      min-width: 0;
+      justify-content: center;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .nav-item {
+      transition: var(--transition-3d);
+      transform-style: preserve-3d;
+      transform: translateZ(0);
+    }
+
+    .nav-item:hover {
+      color: var(--primary-dark) !important;
+      background: rgba(237, 233, 254, 0.5);
+      transform: translateZ(8px) rotateX(-3deg);
+    }
+
+    .nav-item:hover svg {
+      stroke: var(--primary-dark) !important;
+    }
+
+    .nav-item:active {
+      opacity: 0.8;
+      color: var(--primary-dark) !important;
+      background: rgba(237, 233, 254, 0.7);
+      transform: translateZ(4px) rotateX(-1deg);
+    }
+
+    .nav-item:active svg {
+      stroke: var(--primary-dark) !important;
+    }
+
+    .nav-item.active {
+      color: var(--primary-dark) !important;
+      background: rgba(237, 233, 254, 0.6);
+      font-weight: 600;
+    }
+
+    .nav-item.active svg {
+      stroke: var(--primary-dark) !important;
+    }
+
+    .nav-item svg {
+      width: 24px;
+      height: 24px;
+      stroke-width: 2;
+    }
+
+    .nav-item span {
+      font-weight: 500;
+      white-space: nowrap;
+      font-size: 0.75rem;
+    }
+
+    /* Purple circular button in the center */
+    .nav-item.nav-button-circle {
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+      border-radius: 50%;
+      width: 56px;
+      height: 56px;
+      padding: 0;
+      border: none;
+      box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+      transition: var(--transition-3d);
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      cursor: pointer;
+      display: flex;
+      position: relative;
+      transform-style: preserve-3d;
+      transform: translateZ(0);
+    }
+
+    .nav-item.nav-button-circle::before {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+      opacity: 0;
+      transform: translateZ(-10px) scale(0.8);
+      transition: all 0.3s;
+      z-index: -1;
+    }
+
+    .nav-item.nav-button-circle:hover {
+      box-shadow: 0 12px 30px rgba(139, 92, 246, 0.6);
+      filter: brightness(1.1);
+      transform: translateZ(15px) rotateY(10deg) rotateX(-5deg);
+    }
+
+    .nav-item.nav-button-circle:hover::before {
+      opacity: 0.3;
+      transform: translateZ(-5px) scale(1.1);
+    }
+
+    .nav-item.nav-button-circle:active {
+      box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+      filter: brightness(0.95);
+      transform: translateZ(8px) rotateY(5deg) rotateX(-2deg);
+    }
+
+    .nav-item.nav-button-circle svg {
+      stroke: white;
+      stroke-width: 2.5;
+      width: 24px;
+      height: 24px;
+      position: relative;
+      z-index: 1;
+      transition: transform 0.3s;
+    }
+
+    .nav-item.nav-button-circle:hover svg {
+      transform: translateZ(10px) rotateY(-10deg) scale(1.1);
+    }
+
+    /* Hidden class */
+    .hidden {
+      display: none !important;
+    }
+    
+    
+    /* Ensure mainLayout is hidden by default */
+    #mainLayout:not(.hidden) {
+      display: flex !important;
+    }
+    
+    #mainLayout.hidden {
+      display: none !important;
+    }
+
+    /* Mobile Optimizations - Small screens */
+    @media (max-width: 400px) {
+      .company-logo-with-name {
+        flex-direction: row;
+        gap: 0.5rem;
+      }
+      
+      .company-logo-with-name .logo-image {
+        height: 45px;
+        max-width: 70px;
+        flex-shrink: 0;
+      }
+      
+      .company-name-home {
+        flex: 1;
+        min-width: 0;
+        align-items: flex-start;
+      }
+      
+      .company-name-english {
+        font-size: 0.6rem !important;
+        text-align: left !important;
+      }
+      
+      .company-name-chinese {
+        font-size: 0.65rem !important;
+        text-align: left !important;
+      }
+    }
+
+    /* Mobile Optimizations */
+    @media (max-width: 480px) {
+      #app {
+        max-width: 100%;
+      }
+      
+      body {
+        font-size: 13px;
+      }
+      
+      /* Reduce padding */
+      .home, .bhxh-lookup, .company-info {
+        padding: 1rem;
+        padding-bottom: 5.5rem;
+      }
+      
+      .progress-card, .lookup-header, .lookup-form, .company-header {
+        padding: 1rem;
+        margin-bottom: 1rem;
+      }
+      
+      /* Reduce font sizes */
+      .greeting {
+        font-size: 1.25rem;
+      }
+      
+      
+      .lookup-title {
+        font-size: 1.25rem;
+      }
+      
+      .lookup-title span:nth-child(1) {
+        font-size: 1.2rem;
+      }
+      
+      .lookup-title span:nth-child(2) {
+        font-size: 1.35rem;
+      }
+      
+      .company-title {
+        font-size: 1.25rem;
+      }
+      
+      .progress-title {
+        font-size: 0.9rem;
+      }
+      
+      /* Reduce spacing */
+      .home-header {
+        margin-bottom: 1rem;
+        padding: 1rem 0.75rem;
+        padding-left: 0.5rem;
+      }
+      
+      /* Fix company name on mobile */
+      .company-logo-with-name {
+        flex-direction: row;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0;
+        margin-left: auto;
+        margin-right: auto;
+        justify-content: center;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+      }
+      
+      .company-logo-with-name .logo-image {
+        height: 50px;
+        max-width: 90px;
+        flex-shrink: 0;
+      }
+      
+      .company-name-home {
+        flex: 0 1 auto;
+        max-width: calc(100% - 100px);
+        min-width: 0;
+      }
+      
+      .company-logo-with-name .logo-image {
+        height: 50px;
+        max-width: 90px;
+      }
+      
+      .company-name-english {
+        font-size: 0.65rem !important;
+        white-space: nowrap !important;
+      }
+      
+      .company-name-chinese {
+        font-size: 0.7rem !important;
+        white-space: nowrap !important;
+      }
+      
+      .section {
+        margin-bottom: 1.5rem;
+      }
+      
+      .home-stats {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+      }
+      
+      .stat-mini-card {
+        padding: 0.875rem 0.5rem;
+      }
+      
+      .stat-mini-value {
+        font-size: 1.25rem;
+      }
+      
+      .stat-mini-label {
+        font-size: 0.7rem;
+      }
+      
+      .section-title {
+        font-size: 1rem;
+        margin-bottom: 0.75rem;
+      }
+      
+      /* Smaller cards */
+      .service-card {
+        padding: 0.875rem;
+        gap: 0.75rem;
+      }
+      
+      .service-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 1.75rem;
+      }
+      
+      .group-card {
+        padding: 1rem;
+      }
+      
+      .stat-card {
+        padding: 1rem 0.75rem;
+      }
+      
+      .stat-value {
+        font-size: 1.5rem;
+      }
+      
+      /* Smaller progress circle */
+      .progress-circle {
+        width: 70px;
+        height: 70px;
+      }
+      
+      .progress-percentage {
+        font-size: 0.9rem;
+      }
+      
+      /* Reduce illustration size */
+      .illustration-container {
+        height: 220px;
+        margin-bottom: 2rem;
+      }
+      
+      
+      /* Groups grid */
+      .groups-grid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+      }
+      
+      .stats-grid {
+        gap: 0.75rem;
+      }
+      
+      /* Smaller buttons */
+      .start-button, .submit-btn {
+        padding: 0.875rem 1.5rem;
+        font-size: 0.9rem;
+      }
+      
+      /* Reduce form input padding */
+      .form-input {
+        padding: 0.75rem;
+        font-size: 0.9rem;
+      }
+    }
+
+    /* Extra small mobile screens */
+    @media (max-width: 360px) {
+      .company-logo-with-name .logo-image {
+        height: 45px;
+        max-width: 75px;
+      }
+      
+      .company-name-english {
+        font-size: 0.6rem !important;
+      }
+      
+      .company-name-chinese {
+        font-size: 0.65rem !important;
+      }
+      
+      .home-header {
+        padding: 0.875rem;
+      }
+    }
+
+    /* Touch optimizations */
+    @media (hover: none) and (pointer: coarse) {
+      .service-card:active,
+      .group-card:active,
+      .stat-card:active,
+      .info-section-card:active {
+        transform: translateY(-2px) translateZ(15px) scale(1.02) !important;
+        box-shadow: 0 10px 25px rgba(139, 92, 246, 0.4) !important;
+        border: 2px solid var(--primary-light) !important;
+        filter: brightness(1.1) !important;
+      }
+    }
+
+    /* Reduce motion for accessibility */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <!-- Main Layout -->
+    <div id="mainLayout" class="layout">
+      <main class="main-content">
+        <!-- Home Page -->
+        <div id="homePage" class="home hidden">
+          <div class="home-header">
+            <div class="company-logo-with-name">
+              <img src="logo.png" alt="Logo" class="logo-image" />
+              <div class="company-name-home">
+                <div class="company-name-english">CÔNG TY TNHH CÔNG NGHỆ SINCETECH(VIỆT NAM)</div>
+                <div class="company-name-chinese">信泰（越南）科技有限公司</div>
+              </div>
+            </div>
+            <div style="position: relative; z-index: 1;">
+              <h1 class="greeting">Xin chào!</h1>
+              <p class="subtitle">Chào mừng bạn đến với hệ thống quản lý thông tin công ty và tra cứu BHXH</p>
+            </div>
+          </div>
+
+          <div class="home-stats">
+            <div class="stat-mini-card card-3d">
+              <div class="stat-mini-value">25+</div>
+              <div class="stat-mini-label">Năm kinh nghiệm</div>
+            </div>
+            <div class="stat-mini-card card-3d">
+              <div class="stat-mini-value">100%</div>
+              <div class="stat-mini-label">Hoàn thành</div>
+            </div>
+            <div class="stat-mini-card card-3d">
+              <div class="stat-mini-value">24/7</div>
+              <div class="stat-mini-label">Hỗ trợ</div>
+            </div>
+          </div>
+
+          <div class="progress-card card-3d" onclick="showCompany()" style="cursor: pointer;">
+            <div class="progress-content" style="margin-bottom: 0.875rem;">
+              <div style="display: flex; align-items: center; gap: 0.875rem;">
+                <div style="font-size: 2.25rem; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(6, 182, 212, 0.15) 100%); border-radius: 1rem; flex-shrink: 0; box-shadow: 0 4px 12px rgba(139, 92, 246, 0.2);">
+                  🏢
+                </div>
+                <div style="flex: 1;">
+                  <h3 class="progress-title" style="font-size: 1.1rem; margin-bottom: 0.125rem; background: linear-gradient(90deg, var(--primary-dark) 0%, var(--primary-color) 50%, var(--primary-dark) 100%); background-size: 200% 100%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: gradientShift 3s ease-in-out infinite;">Thông tin công ty</h3>
+                  <p style="color: var(--text-secondary); font-size: 0.85rem; margin: 0; line-height: 1.3;">Tìm hiểu về công ty, lịch sử và thành tựu</p>
+                </div>
+              </div>
+            </div>
+            <button class="view-button button-3d" onclick="event.stopPropagation(); showCompany();">
+              <span>Xem chi tiết</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </button>
+          </div>
+
+          <div class="section">
+            <h2 class="section-title">Dịch vụ nhanh</h2>
+            <div class="services-list">
+              <div class="service-card card-3d" onclick="showBHXH()">
+                <div class="service-icon">🔍</div>
+                <div class="service-info">
+                  <h4 class="service-title">Tra cứu BHXH</h4>
+                  <p class="service-subtitle">Kiểm tra tình trạng chốt sổ</p>
+                </div>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M9 18l6-6-6-6" />
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="section" style="display: none;">
+            <h2 class="section-title">Nhóm dịch vụ</h2>
+            <div class="groups-grid">
+              <div class="group-card card-3d">
+                <div class="group-header">
+                  <span class="group-icon">⭐</span>
+                  <h4 class="group-name">Dịch vụ chính</h4>
+                </div>
+                <div class="group-stats">
+                  <span class="group-items">2 mục</span>
+                  <div class="group-progress-bar">
+                    <div class="group-progress-fill" style="width: 100%"></div>
+                  </div>
+                  <span class="group-percentage">100%</span>
+                </div>
+              </div>
+              <div class="group-card card-3d">
+                <div class="group-header">
+                  <span class="group-icon">📋</span>
+                  <h4 class="group-name">Thông tin</h4>
+                </div>
+                <div class="group-stats">
+                  <span class="group-items">5 mục</span>
+                  <div class="group-progress-bar">
+                    <div class="group-progress-fill" style="width: 80%"></div>
+                  </div>
+                  <span class="group-percentage">80%</span>
+                </div>
+              </div>
+              <div class="group-card card-3d">
+                <div class="group-header">
+                  <span class="group-icon">💬</span>
+                  <h4 class="group-name">Hỗ trợ</h4>
+                </div>
+                <div class="group-stats">
+                  <span class="group-items">3 mục</span>
+                  <div class="group-progress-bar">
+                    <div class="group-progress-fill" style="width: 60%"></div>
+                  </div>
+                  <span class="group-percentage">60%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- BHXH Lookup Page -->
+        <div id="bhxhPage" class="bhxh-lookup hidden">
+          <div class="lookup-header card-3d">
+            <div class="company-logo" style="justify-content: center; margin-bottom: 0.5rem; padding: 0;">
+              <img src="logo.png" alt="Logo" class="logo-image" />
+              <div class="logo-text">
+                <div class="logo-text-english">
+                  <span class="logo-text-since" style="color: var(--primary-dark);">Since</span><span class="logo-text-tech" style="color: var(--primary-color);">Tech</span>
+                </div>
+                <div class="logo-text-chinese" style="color: var(--primary-dark);">信泰集团</div>
+              </div>
+            </div>
+            <h2 class="lookup-title">
+              <span>Tra cứu tình trạng chốt sổ</span>
+              <span>BHXH</span>
+            </h2>
+            <p class="lookup-subtitle">Nhập mã số nhân viên để tra cứu thông tin</p>
+          </div>
+
+          <form class="lookup-form card-3d" onsubmit="return handleLookup(event);">
+            <div class="form-group">
+              <label class="form-label" for="cardNumber">
+                <span style="display: inline-flex; align-items: center; gap: 0.5rem;">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="4" width="18" height="16" rx="2"/>
+                    <line x1="7" y1="10" x2="7" y2="14"/>
+                    <line x1="12" y1="10" x2="17" y2="10"/>
+                  </svg>
+                  Mã số nhân viên <span class="required">*</span>
+                </span>
+              </label>
+              <input type="text" id="cardNumber" name="cardNumber" class="form-input" 
+                     placeholder="Nhập mã số nhân viên" maxlength="50" />
+            </div>
+
+            <div id="errorMessage" class="error-message" style="display: none !important;"></div>
+
+            <button type="submit" class="submit-btn button-3d" id="submitBtn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8" />
+                <path d="m21 21-4.35-4.35" />
+              </svg>
+              Tra cứu
+            </button>
+          </form>
+
+          <div id="resultCard" class="result-card card-3d hidden">
+            <div class="result-header">
+              <h3 class="result-title">Kết quả tra cứu</h3>
+              <div id="statusBadge" class="status-badge"></div>
+            </div>
+            <div class="result-content" id="resultContent"></div>
+          </div>
+
+          <div class="help-section" style="background: var(--surface); border-radius: 1rem; padding: 1.25rem; box-shadow: var(--shadow); margin-top: 1rem;">
+            <h4 class="section-title" style="background: none !important; -webkit-background-clip: unset !important; background-clip: unset !important; -webkit-text-fill-color: unset !important; color: var(--primary-dark) !important; margin-bottom: 0.875rem;">📋 Hướng dẫn sử dụng</h4>
+            <div class="section-content">
+              <ul style="list-style: none; padding: 0; margin: 0;">
+                <li style="margin-bottom: 0.625rem; padding-left: 1.25rem; position: relative; color: var(--text-secondary); font-size: 0.9rem; line-height: 1.7; text-align: left;">
+                  <span style="position: absolute; left: 0; color: var(--primary-color); font-weight: bold; font-size: 1rem;">•</span>
+                  Nhập <strong>mã số nhân viên</strong> vào ô tìm kiếm và nhấn nút <strong>"Tra cứu"</strong>
+                </li>
+                <li style="margin-bottom: 0.625rem; padding-left: 1.25rem; position: relative; color: var(--text-secondary); font-size: 0.9rem; line-height: 1.7; text-align: left;">
+                  <span style="position: absolute; left: 0; color: var(--primary-color); font-weight: bold; font-size: 1rem;">•</span>
+                  Nếu tìm thấy thông tin: Hệ thống sẽ hiển thị <strong>thông tin cá nhân</strong> và <strong>tình trạng chốt sổ BHXH</strong> của bạn
+                </li>
+                <li style="margin-bottom: 0.625rem; padding-left: 1.25rem; position: relative; color: var(--text-secondary); font-size: 0.9rem; line-height: 1.7; text-align: left;">
+                  <span style="position: absolute; left: 0; color: var(--primary-color); font-weight: bold; font-size: 1rem;">•</span>
+                  Nếu thấy thông báo <strong style="color: #10B981; background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.1) 100%); padding: 0.125rem 0.375rem; border-radius: 0.25rem; font-weight: 700;">"chốt sổ đã hoàn thành"</strong>, vui lòng mang theo <strong>giấy tờ tùy thân</strong> đến bộ phận <strong>Nhân sự</strong> để nhận lại hồ sơ
+                </li>
+                <li style="margin-bottom: 0.625rem; padding-left: 1.25rem; position: relative; color: var(--text-secondary); font-size: 0.9rem; line-height: 1.7; text-align: left;">
+                  <span style="position: absolute; left: 0; color: var(--primary-color); font-weight: bold; font-size: 1rem;">•</span>
+                  Nếu không tìm thấy thông tin: Cơ quan BHXH vẫn <strong style="color: #92400E; background: linear-gradient(135deg, rgba(254, 243, 199, 0.6) 0%, rgba(253, 230, 138, 0.6) 100%); padding: 0.125rem 0.5rem; border-radius: 0.375rem; font-weight: 700; border: 1px solid #F59E0B;">chưa hoàn tất thủ tục chốt sổ</strong>, bạn vui lòng <strong>chờ thêm</strong> và <strong>cập nhật trạng thái</strong> ngay trên hệ thống này
+                </li>
+                <li style="margin-bottom: 0; padding-left: 1.25rem; position: relative; color: var(--text-secondary); font-size: 0.9rem; line-height: 1.7; text-align: left;">
+                  <span style="position: absolute; left: 0; color: var(--primary-color); font-weight: bold; font-size: 1rem;">•</span>
+                  Mọi thắc mắc vui lòng liên hệ hotline: <strong style="color: var(--primary-color);">02763819888</strong>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Company Info Page -->
+        <div id="companyPage" class="company-info hidden">
+          <div class="company-header card-3d">
+            <div class="company-logo" style="justify-content: center; margin-bottom: 0.75rem;">
+              <img src="logo.png" alt="Logo" class="logo-image" />
+            </div>
+            <h2 class="company-title">Về công ty chúng tôi</h2>
+            <p style="color: var(--text-secondary); font-size: 0.9rem; margin: 0;">Tìm hiểu thêm về lịch sử, giá trị và thành tựu của chúng tôi</p>
+          </div>
+
+          <div class="stats-grid">
+            <div class="stat-card card-3d">
+              <div class="stat-icon">⭐</div>
+              <div class="stat-value">25+</div>
+              <div class="stat-label">Năm kinh nghiệm</div>
+            </div>
+            <div class="stat-card card-3d">
+              <div class="stat-icon">🏭</div>
+              <div class="stat-value">10+</div>
+              <div class="stat-label">Nhà máy</div>
+            </div>
+            <div class="stat-card card-3d">
+              <div class="stat-icon">🏢</div>
+              <div class="stat-value">16+</div>
+              <div class="stat-label">Văn phòng</div>
+            </div>
+            <div class="stat-card card-3d">
+              <div class="stat-icon">👥</div>
+              <div class="stat-value">5K+</div>
+              <div class="stat-label">Nhân sự</div>
+            </div>
+          </div>
+
+          <div class="info-section-card card-3d">
+            <div class="section-header">
+              <span class="section-icon">🏢</span>
+              <h3 style="font-size: 1.125rem; font-weight: 600; color: var(--primary-dark);">Giới thiệu tập đoàn SinceTech</h3>
+            </div>
+            <div class="section-content">
+              <p style="margin-bottom: 0;">SinceTech (Tín Thái Tập Đoàn) là doanh nghiệp công nghệ cao hàng đầu thế giới chuyên sản xuất vật liệu dệt may cho ngành giày thể thao. Được thành lập năm 1999, chúng tôi tự hào là đối tác chiến lược (Tier-1 Supplier) cung cấp vải lưới và mũ giày cao cấp cho các thương hiệu toàn cầu như Adidas, Skechers, Mizuno......</p>
+            </div>
+          </div>
+
+          <div class="info-section-card card-3d">
+            <div class="section-header" onclick="toggleTimeline()" style="cursor: pointer;">
+              <span class="section-icon">📜</span>
+              <h3 style="font-size: 1.125rem; font-weight: 600; color: var(--primary-dark);">Lịch sử hình thành</h3>
+            </div>
+            <div class="timeline-container" id="timelineContainer">
+            <div class="timeline">
+              <div class="timeline-item">
+                <div class="timeline-year">1999</div>
+                <div class="timeline-content"><strong>Thành lập:</strong> Ông Cai Qinglai (Thái Thanh Lai) thành lập công ty tại Tấn Giang, Phúc Kiến - nơi được mệnh danh là "thủ phủ giày" của Trung Quốc. <strong>Sản phẩm đầu tiên:</strong> Khởi nghiệp với việc sản xuất vải lưới dệt kim (Knitted Mesh) cơ bản, phục vụ các xưởng giày địa phương.</div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-year">2000 - 2004</div>
+                <div class="timeline-content"><strong>Mở rộng năng lực:</strong> Đầu tư thêm máy móc dệt kim tròn (Circular Knitting) bên cạnh dệt kim dọc (Warp Knitting). Giai đoạn này công ty tập trung tích lũy kỹ thuật và mở rộng tệp khách hàng nội địa.</div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-year">2005</div>
+                <div class="timeline-content"><strong>Xây dựng thương hiệu:</strong> Chính thức đẩy mạnh thương hiệu "SinceTech" (Tín Thái) ra thị trường. Không còn chỉ là xưởng gia công nhỏ lẻ, công ty bắt đầu định vị là nhà cung cấp nguyên liệu chất lượng cao.</div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-year">2009</div>
+                <div class="timeline-content"><strong>Bước ngoặt công nghệ (Dệt - Nhuộm tích hợp):</strong> Lần đầu tiên đưa vào hoạt động dây chuyền Nhuộm (Dyeing).</div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-year">2012</div>
+                <div class="timeline-content"><strong>Đầu tư R&D (Nghiên cứu & Phát triển):</strong> Thành lập trung tâm nghiên cứu chuyên sâu về vật liệu mới. Bắt đầu phát triển các dòng vải lưới kỹ thuật cao (Engineered Mesh) để cạnh tranh với các đối thủ quốc tế.</div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-year">2014</div>
+                <div class="timeline-content"><strong>Chiến lược "Vươn ra biển lớn" (Go Global):</strong> Ban lãnh đạo công ty thực hiện các chuyến khảo sát thị trường quốc tế quy mô lớn.</div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-year">2015</div>
+                <div class="timeline-content"><strong>Chuyển đổi số & Công nghệ 4.0:</strong> Bắt đầu ứng dụng công nghệ thông tin vào quản lý sản xuất. Đây cũng là năm công ty đẩy mạnh dòng sản phẩm Flyknit (Dệt 3D/4D) đang trở thành xu hướng "hot" của giày thể thao thế giới.</div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-year">2016</div>
+                <div class="timeline-content"><strong>Thành lập Văn phòng tại Mỹ (USA Office):</strong> Mở văn phòng đại diện thiết kế tại Portland và Boston (nơi đặt trụ sở của Nike, Adidas, Reebok).</div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-year">2017</div>
+                <div class="timeline-content"><strong>Thành lập Văn phòng tại Đức & Vinh danh Quốc gia:</strong> Mở thêm trung tâm tại Đức để phục vụ thị trường Châu Âu (Adidas, Puma). Được công nhận là "Doanh nghiệp Công nghệ cao Quốc gia" và "Trung tâm Thiết kế Công nghiệp Quốc gia" tại Trung Quốc.</div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-year">2018</div>
+                <div class="timeline-content"><strong>Số hóa toàn diện:</strong> Triển khai mạnh mẽ mô hình "Nhà máy thông minh" (Smart Factory), sử dụng robot và AI để kiểm soát lỗi vải tự động, giảm thiểu sai sót của con người.</div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-year">2019</div>
+                <div class="timeline-content"><strong>Đầu tư vào Việt Nam (Cột mốc quan trọng):</strong> Tháng 5/2019: Làm lễ động thổ khởi công Nhà máy SinceTech Việt Nam tại KCN Thành Thành Công, Trảng Bàng, Tây Ninh. Đây là bước đi chiến lược để tránh thuế quan và tận dụng nguồn lao động tay nghề cao tại Việt Nam.</div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-year">2020</div>
+                <div class="timeline-content"><strong>Xây dựng thần tốc:</strong> Bất chấp đại dịch COVID-19, nhà máy tại Tây Ninh vẫn hoàn thiện xây dựng cơ bản (nhà xưởng, khu xử lý nước thải, ký túc xá).</div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-year">2021</div>
+                <div class="timeline-content"><strong>Vận hành tại Việt Nam:</strong> Nhà máy Tây Ninh chính thức đi vào hoạt động ổn định với quy trình khép kín Dệt - Nhuộm - Hoàn tất. Bắt đầu xuất khẩu những lô hàng vải đầu tiên "Made in Vietnam".</div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-year">2023</div>
+                <div class="timeline-content"><strong>Top đầu ngành:</strong> Được vinh danh trong "Top 30 Doanh nghiệp ngành Dệt kim Trung Quốc". Đạt chứng nhận "Nhà máy Xanh" (Green Factory) nhờ quy trình nhuộm tiết kiệm nước và năng lượng mặt trời.</div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-year">2024</div>
+                <div class="timeline-content"><strong>Mở rộng thị trường:</strong> Củng cố vị thế Tier-1 Supplier (Nhà cung cấp cấp 1) cho các thương hiệu: Adidas, Skechers, Mizuno, Anta. Năng lực sản xuất đạt hàng trăm triệu mét vải/năm.</div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-year">2025</div>
+                <div class="timeline-content"><strong>Tiến quân ra Bắc:</strong> Tháng 10/2025: Thành lập pháp nhân mới "Công ty TNHH Công Nghệ Dệt May Sincetech Việt Nam" tại Hải Phòng (KCN VSIP).</div>
+              </div>
+            </div>
+            </div>
+            <div class="timeline-toggle" onclick="toggleTimeline()">
+              <span class="timeline-toggle-text" id="timelineToggleText">Xem chi tiết lịch sử</span>
+              <span class="timeline-toggle-icon">▼</span>
+            </div>
+          </div>
+
+          <div class="info-section-card card-3d">
+            <div class="section-header">
+              <span class="section-icon">🎯</span>
+              <h3 style="font-size: 1.125rem; font-weight: 600; color: var(--primary-dark);">Sứ mệnh</h3>
+            </div>
+            <div class="section-content">
+              <p style="font-style: italic; color: var(--primary-dark); font-weight: 600; margin-bottom: 0.75rem; text-align: left;">"Leading green technology, weaving for a better life"</p>
+              <p style="margin-bottom: 0; text-align: left;"><strong>Dẫn đầu công nghệ xanh, dệt nên cuộc sống tốt đẹp hơn</strong></p>
+            </div>
+          </div>
+
+          <div class="info-section-card card-3d">
+            <div class="section-header">
+              <span class="section-icon">👁️</span>
+              <h3 style="font-size: 1.125rem; font-weight: 600; color: var(--primary-dark);">Tầm nhìn</h3>
+            </div>
+            <div class="section-content">
+              <p style="font-style: italic; color: var(--primary-dark); font-weight: 600; margin-bottom: 0.75rem; text-align: left;">"The global leader in textile technology across the entire industry chain"</p>
+              <p style="margin-bottom: 0; text-align: left;"><strong>Trở thành nhà lãnh đạo toàn cầu về công nghệ dệt may trên toàn chuỗi giá trị</strong></p>
+            </div>
+          </div>
+
+          <div class="info-section-card card-3d" style="padding-bottom: 1rem; margin-bottom: 0;">
+            <div class="section-header">
+              <span class="section-icon">📞</span>
+              <h3 style="font-size: 1.125rem; font-weight: 600; color: var(--primary-dark);">Thông tin liên hệ</h3>
+            </div>
+            <div class="section-content" style="margin: 0;">
+              <div style="display: flex; flex-direction: column; gap: 0.625rem;">
+                <div>
+                  <strong style="display: block; font-size: 0.9rem; color: var(--primary-color); margin-bottom: 0.25rem; font-weight: 600;">Địa chỉ:</strong>
+                  <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.7; margin: 0; text-align: justify;">Lô B2, Đường C4, KCN Thành Thành Công, An Hòa, Trảng Bàng, Tây Ninh</p>
+                </div>
+                <div>
+                  <strong style="display: block; font-size: 0.9rem; color: var(--primary-color); margin-bottom: 0.25rem; font-weight: 600;">Điện thoại:</strong>
+                  <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.7; margin: 0;">02763819888</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <!-- Bottom Navigation -->
+      <nav class="bottom-nav">
+        <div class="nav-section">
+          <button class="nav-item active" onclick="showHome()" id="navHome">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+              <polyline points="9 22 9 12 15 12 15 22" />
+            </svg>
+            <span>Trang chủ</span>
+          </button>
+        </div>
+        
+        <div class="nav-section-center">
+          <button class="nav-item nav-button-circle" onclick="showBHXH()" id="navBHXH">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <circle cx="11" cy="11" r="8" />
+              <path d="m21 21-4.35-4.35" />
+            </svg>
+          </button>
+        </div>
+        
+        <div class="nav-section">
+          <button class="nav-item" onclick="showCompany()" id="navCompany">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+              <circle cx="12" cy="10" r="3" />
+            </svg>
+            <span>Công ty</span>
+          </button>
+        </div>
+      </nav>
+    </div>
+  </div>
+
+  <script>
+    // ===== GOOGLE SHEETS INTEGRATION =====
+    // HƯỚNG DẪN CẤU HÌNH:
+    // BƯỚC 1: Publish Google Sheets công khai
+    //   - Mở Google Sheets: https://docs.google.com/spreadsheets/d/16hEqjJcg4QAIrSvLw65hwvfb_H4KK0qsJlXPzflkKkU/edit
+    //   - Click "Share" (Chia sẻ) ở góc trên bên phải
+    //   - Chọn "Change to anyone with the link" (Thay đổi thành bất kỳ ai có đường liên kết)
+    //   - Chọn "Viewer" (Người xem)
+    //   - Click "Done"
+    //
+    // BƯỚC 2: URL đã được cấu hình sẵn bên dưới
+    
+    // Google Sheets CSV URL - Sheet ID: 16hEqjJcg4QAIrSvLw65hwvfb_H4KK0qsJlXPzflkKkU
+    const GOOGLE_SHEETS_URL = 'https://docs.google.com/spreadsheets/d/16hEqjJcg4QAIrSvLw65hwvfb_H4KK0qsJlXPzflkKkU/gviz/tq?tqx=out:csv&gid=0';
+    
+    // Cache for Google Sheets data (5 minutes)
+    let sheetsDataCache = null;
+    let lastFetchTime = 0;
+    const CACHE_DURATION = 5 * 60 * 1000;
+
+    // Improved CSV parser
+    function parseCSV(csvText) {
+      const rows = [];
+      let currentRow = [];
+      let currentValue = '';
+      let insideQuotes = false;
+      
+      for (let i = 0; i < csvText.length; i++) {
+        const char = csvText[i];
+        const nextChar = csvText[i + 1];
+        
+        if (char === '"') {
+          if (insideQuotes && nextChar === '"') {
+            currentValue += '"';
+            i++; // Skip next quote
+          } else {
+            insideQuotes = !insideQuotes;
+          }
+        } else if (char === ',' && !insideQuotes) {
+          currentRow.push(currentValue.trim());
+          currentValue = '';
+        } else if ((char === '\n' || char === '\r') && !insideQuotes) {
+          if (currentValue || currentRow.length > 0) {
+            currentRow.push(currentValue.trim());
+            if (currentRow.length > 0) {
+              rows.push(currentRow);
+            }
+            currentRow = [];
+            currentValue = '';
+          }
+          if (char === '\r' && nextChar === '\n') {
+            i++; // Skip \n after \r
+          }
+        } else {
+          currentValue += char;
+        }
+      }
+      
+      // Add last row
+      if (currentValue || currentRow.length > 0) {
+        currentRow.push(currentValue.trim());
+        if (currentRow.length > 0) {
+          rows.push(currentRow);
+        }
+      }
+      
+      return rows;
+    }
+
+    // Fetch data from Google Sheets
+    async function fetchGoogleSheetsData() {
+      const now = Date.now();
+      if (sheetsDataCache && (now - lastFetchTime) < CACHE_DURATION) {
+        return sheetsDataCache;
+      }
+
+      try {
+        if (!GOOGLE_SHEETS_URL || GOOGLE_SHEETS_URL === 'YOUR_GOOGLE_SHEETS_CSV_URL_HERE') {
+          throw new Error('Vui lòng cấu hình Google Sheets URL trong code');
+        }
+
+        const response = await fetch(GOOGLE_SHEETS_URL);
+        
+        if (!response.ok) {
+          throw new Error('Không thể tải dữ liệu từ Google Sheets (HTTP ' + response.status + '). Vui lòng kiểm tra lại URL và đảm bảo Google Sheets đã được publish công khai.');
+        }
+        
+        const csvText = await response.text();
+        
+        if (!csvText || csvText.trim().length === 0) {
+          throw new Error('Google Sheets trả về dữ liệu rỗng. Vui lòng kiểm tra lại Google Sheets có dữ liệu chưa.');
+        }
+        
+        const rows = parseCSV(csvText);
+        
+        // Filter out empty rows
+        const validRows = rows.filter(row => row.length > 0 && row.some(cell => cell && cell.trim() !== ''));
+        
+        if (validRows.length < 2) {
+          throw new Error('Dữ liệu Google Sheets không hợp lệ (thiếu header hoặc dữ liệu)');
+        }
+
+        // Parse header from row 1 (index 0)
+        const headers = validRows[0].map(h => h.trim().replace(/^"|"$/g, ''));
+        
+        // Check if SO_THE column exists
+        if (!headers.includes('SO_THE')) {
+          throw new Error('Google Sheets thiếu cột SO_THE. Vui lòng kiểm tra lại header ở dòng 1.');
+        }
+        
+        // Parse data rows starting from row 2 (index 1)
+        const data = [];
+        for (let i = 1; i < validRows.length; i++) {
+          const rowData = validRows[i];
+          
+          // Skip completely empty rows
+          if (rowData.length === 0 || rowData.every(cell => !cell || cell.trim() === '')) {
+            continue;
+          }
+          
+          const row = {};
+          headers.forEach((header, index) => {
+            row[header] = (rowData[index] || '').trim();
+          });
+          
+          // Only add rows that have SO_THE (card number) - data starts from row 2
+          const soThe = row.SO_THE || row['SO_THE'];
+          if (soThe && soThe.trim()) {
+            data.push(row);
+          }
+        }
+
+        if (data.length === 0) {
+          throw new Error('Không tìm thấy dữ liệu hợp lệ trong Google Sheets (không có dòng nào có SO_THE)');
+        }
+
+        sheetsDataCache = data;
+        lastFetchTime = now;
+        return data;
+      } catch (error) {
+        // Clear cache on error
+        sheetsDataCache = null;
+        lastFetchTime = 0;
+        throw error;
+      }
+    }
+
+    // Search employee by SO_THE (card number/employee ID)
+    function searchEmployee(cardNumber, data) {
+      if (!data || !Array.isArray(data)) {
+        return null;
+      }
+      
+      // Normalize search term: trim, remove spaces, uppercase
+      const normalizedSearch = cardNumber.trim().replace(/\s+/g, '').toUpperCase();
+      
+      // Search in SO_THE column (case insensitive, remove spaces)
+      return data.find(row => {
+        const soThe = (row.SO_THE || row['SO_THE'] || '').trim().replace(/\s+/g, '').toUpperCase();
+        return soThe === normalizedSearch;
+      }) || null;
+    }
+
+    // Format date from DD/MM/YYYY to display format
+    function formatDate(dateStr) {
+      if (!dateStr) return '';
+      return dateStr.trim();
+    }
+
+    // Define handleLookup function - integrated with Google Sheets
+    window.handleLookup = async function(e) {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      
+      const cardNumberInput = document.getElementById('cardNumber');
+      const errorMessage = document.getElementById('errorMessage');
+      const resultCard = document.getElementById('resultCard');
+      const submitBtn = document.getElementById('submitBtn');
+      
+      if (!cardNumberInput || !errorMessage) {
+        return false;
+      }
+      
+      const cardNumber = cardNumberInput.value.trim();
+      
+      // Hide result card first
+      if (resultCard) {
+        resultCard.classList.add('hidden');
+        resultCard.style.display = 'none';
+      }
+
+      // Validation - show error immediately if empty
+      if (!cardNumber || cardNumber.length === 0) {
+        errorMessage.textContent = '⚠️ Vui lòng nhập mã số nhân viên';
+        errorMessage.className = 'error-message';
+        errorMessage.classList.remove('hidden');
+        errorMessage.removeAttribute('hidden');
+        errorMessage.setAttribute('style', 'display: flex !important; visibility: visible !important; opacity: 1 !important;');
+        setTimeout(() => {
+          errorMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 50);
+        cardNumberInput.focus();
+        return false;
+      }
+
+      // Hide error if validation passes
+      errorMessage.classList.add('hidden');
+      errorMessage.style.cssText = 'display: none !important;';
+
+
+      try {
+        // Fetch data from Google Sheets
+        const sheetsData = await fetchGoogleSheetsData();
+        
+        if (!sheetsData || sheetsData.length === 0) {
+          throw new Error('Không có dữ liệu từ Google Sheets. Vui lòng kiểm tra lại cấu hình.');
+        }
+        
+        // Search for employee
+        const employee = searchEmployee(cardNumber, sheetsData);
+        
+        // Reset button
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" /></svg> Tra cứu';
+        }
+
+        if (!employee) {
+          // Employee not found
+          errorMessage.innerHTML = '<div class="error-message-icon">⚠️</div><div class="error-message-text">Hiện tại, cơ quan BHXH vẫn chưa hoàn tất thủ tục chốt sổ nên công ty chưa thể bàn giao hồ sơ. Bạn vui lòng chờ thêm và cập nhật trạng thái ngay trên hệ thống này.</div>';
+          errorMessage.classList.remove('hidden');
+          errorMessage.style.cssText = 'display: flex !important; visibility: visible !important; opacity: 1 !important;';
+          setTimeout(() => {
+            errorMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }, 50);
+          return false;
+        }
+
+        // Display result
+        if (resultCard) {
+          const statusBadge = document.getElementById('statusBadge');
+          if (statusBadge) {
+            statusBadge.className = 'status-badge status-completed';
+            statusBadge.textContent = '✅ Đã tìm thấy';
+          }
+
+          const resultContent = document.getElementById('resultContent');
+          if (resultContent) {
+            const hoTen = employee.HO_TEN || employee['HO_TEN'] || '';
+            const ngaySinh = formatDate(employee.NGAY_SINH || employee['NGAY_SINH'] || '');
+            const maSoBHXH = employee.MA_SO_BHXH || employee['MA_SO_BHXH'] || '';
+            const gioiTinh = employee.GIOI_TINH || employee['GIOI_TINH'] || '';
+            const cccd = employee.CCCD || employee['CCCD'] || '';
+            const boPhan = employee.BO_PHAN || employee['BO_PHAN'] || '';
+            const to = employee.TO || employee['TO'] || '';
+
+            resultContent.innerHTML = `
+              <div class="completion-notice">
+                <div class="notice-icon">📢</div>
+                <div class="notice-text">Công ty thông báo việc chốt sổ đã hoàn thành. Mời bạn mang theo giấy tờ tùy thân ghé bộ phận Nhân sự để nhận lại hồ sơ</div>
+              </div>
+              <div class="result-row">
+                <span class="result-label">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2.5" style="vertical-align: middle; margin-right: 0.5rem; filter: drop-shadow(0 2px 4px rgba(59, 130, 246, 0.3));">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                    <circle cx="12" cy="7" r="4"/>
+                  </svg>
+                  Họ và tên:
+                </span>
+                <span class="result-value">${hoTen || 'Chưa có thông tin'}</span>
+              </div>
+              <div class="result-row">
+                <span class="result-label">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5" style="vertical-align: middle; margin-right: 0.5rem; filter: drop-shadow(0 2px 4px rgba(16, 185, 129, 0.3));">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                    <line x1="16" y1="2" x2="16" y2="6"/>
+                    <line x1="8" y1="2" x2="8" y2="6"/>
+                    <line x1="3" y1="10" x2="21" y2="10"/>
+                  </svg>
+                  Ngày tháng năm sinh:
+                </span>
+                <span class="result-value">${ngaySinh || 'Chưa có thông tin'}</span>
+              </div>
+              <div class="result-row">
+                <span class="result-label">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#EC4899" stroke-width="2.5" style="vertical-align: middle; margin-right: 0.5rem; filter: drop-shadow(0 2px 4px rgba(236, 72, 153, 0.3));">
+                    <circle cx="12" cy="8" r="5"/>
+                    <path d="M12 13v6M9 18h6"/>
+                  </svg>
+                  Giới tính:
+                </span>
+                <span class="result-value">${gioiTinh || 'Chưa có thông tin'}</span>
+              </div>
+              <div class="result-row">
+                <span class="result-label">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2.5" style="vertical-align: middle; margin-right: 0.5rem; filter: drop-shadow(0 2px 4px rgba(245, 158, 11, 0.3));">
+                    <rect x="2" y="4" width="20" height="14" rx="2"/>
+                    <rect x="4" y="8" width="4" height="6" rx="1" fill="#F59E0B" opacity="0.3"/>
+                    <line x1="10" y1="11" x2="18" y2="11"/>
+                  </svg>
+                  Mã số BHXH:
+                </span>
+                <span class="result-value">${maSoBHXH || 'Chưa có thông tin'}</span>
+              </div>
+              <div class="result-row">
+                <span class="result-label">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#06B6D4" stroke-width="2.5" style="vertical-align: middle; margin-right: 0.5rem; filter: drop-shadow(0 2px 4px rgba(6, 182, 212, 0.3));">
+                    <rect x="2" y="4" width="20" height="14" rx="2"/>
+                    <rect x="4" y="8" width="4" height="6" rx="1" fill="#06B6D4" opacity="0.3"/>
+                    <line x1="10" y1="11" x2="18" y2="11"/>
+                  </svg>
+                  Căn cước công dân:
+                </span>
+                <span class="result-value">${cccd || 'Chưa có thông tin'}</span>
+              </div>
+              ${boPhan ? `
+              <div class="result-row">
+                <span class="result-label">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="2.5" style="vertical-align: middle; margin-right: 0.5rem; filter: drop-shadow(0 2px 4px rgba(139, 92, 246, 0.3));">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                  </svg>
+                  Bộ phận:
+                </span>
+                <span class="result-value">${boPhan}</span>
+              </div>
+              ` : ''}
+              ${to ? `
+              <div class="result-row">
+                <span class="result-label">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#14B8A6" stroke-width="2.5" style="vertical-align: middle; margin-right: 0.5rem; filter: drop-shadow(0 2px 4px rgba(20, 184, 166, 0.3));">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                    <circle cx="9" cy="7" r="4"/>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                  </svg>
+                  Tổ:
+                </span>
+                <span class="result-value">${to}</span>
+              </div>
+              ` : ''}
+            `;
+          }
+
+          resultCard.classList.remove('hidden');
+          resultCard.style.display = 'block';
+          setTimeout(() => {
+            resultCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }, 100);
+        }
+      } catch (error) {
+        // Reset button on error
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" /></svg> Tra cứu';
+        }
+        
+        // Show error message with details
+        const errorMsg = error.message || 'Có lỗi xảy ra khi tải dữ liệu. Vui lòng kiểm tra lại Google Sheets URL hoặc thử lại sau.';
+        errorMessage.textContent = '⚠️ ' + errorMsg;
+        errorMessage.classList.remove('hidden');
+        errorMessage.style.cssText = 'display: flex !important; visibility: visible !important; opacity: 1 !important;';
+        setTimeout(() => {
+          errorMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 50);
+        
+        // Log error for debugging
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+          console.error('Lookup error:', error);
+        }
+      }
+      
+      return false;
+    };
+    
+    // Simple initialization function
+    function initApp() {
+      try {
+        const mainLayout = document.getElementById('mainLayout');
+        const homePage = document.getElementById('homePage');
+        const bhxhPage = document.getElementById('bhxhPage');
+        const companyPage = document.getElementById('companyPage');
+        
+        // Always show main layout
+        if (mainLayout) {
+          mainLayout.classList.remove('hidden');
+          mainLayout.style.display = 'flex';
+        }
+        if (homePage) {
+          homePage.classList.remove('hidden');
+        }
+        if (bhxhPage) bhxhPage.classList.add('hidden');
+        if (companyPage) companyPage.classList.add('hidden');
+        updateNav('home');
+      } catch (e) {
+        // Silent error handling
+      }
+    }
+    
+    // Run when DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initApp);
+    } else {
+      initApp();
+    }
+    
+
+    // Optimized page navigation - consolidated
+    const pageIds = {
+      mainLayout: 'mainLayout',
+      homePage: 'homePage',
+      bhxhPage: 'bhxhPage',
+      companyPage: 'companyPage'
+    };
+
+    function showPage(page) {
+      const pages = {
+        home: { show: 'homePage', nav: 'home' },
+        company: { show: 'companyPage', nav: 'company' },
+        bhxh: { show: 'bhxhPage', nav: 'bhxh' }
+      };
+      
+      const config = pages[page];
+      if (!config) return;
+      
+      // Ensure main layout is visible
+      const mainLayout = document.getElementById(pageIds.mainLayout);
+      if (mainLayout) {
+        mainLayout.classList.remove('hidden');
+        mainLayout.style.display = 'flex';
+      }
+      
+      // Show/hide pages
+      ['homePage', 'bhxhPage', 'companyPage'].forEach(id => {
+        const el = document.getElementById(pageIds[id]);
+        if (el) {
+          el.classList.toggle('hidden', id !== config.show);
+        }
+      });
+      
+      updateNav(config.nav);
+      
+      // Setup form listener when BHXH page is shown
+      if (page === 'bhxh') {
+        setTimeout(setupLookupForm, 200);
+      }
+    }
+
+    function showHome() { showPage('home'); }
+    function showCompany() { showPage('company'); }
+    function showBHXH() { showPage('bhxh'); }
+
+    function updateNav(active) {
+      const navHome = document.getElementById('navHome');
+      const navCompany = document.getElementById('navCompany');
+      const navBHXH = document.getElementById('navBHXH');
+      
+      // Remove active from all
+      navHome.classList.remove('active');
+      navCompany.classList.remove('active');
+      navBHXH.classList.remove('active');
+      
+      // Add active to current
+      if (active === 'home') {
+        navHome.classList.add('active');
+      } else if (active === 'company') {
+        navCompany.classList.add('active');
+      } else if (active === 'bhxh') {
+        // BHXH button doesn't need active state as it's always purple
+      }
+    }
+
+    function toggleTimeline() {
+      const container = document.getElementById('timelineContainer');
+      const toggleText = document.getElementById('timelineToggleText');
+      
+      if (container.classList.contains('expanded')) {
+        container.classList.remove('expanded');
+        toggleText.textContent = 'Xem chi tiết lịch sử';
+      } else {
+        container.classList.add('expanded');
+        toggleText.textContent = 'Ẩn chi tiết lịch sử';
+      }
+    }
+
+
+
+    // Function already attached to window above
+
+    // Hide broken logo images - single consolidated function
+    function hideBrokenLogos() {
+      document.querySelectorAll('.logo-image').forEach(img => {
+        img.onerror = () => img.style.display = 'none';
+        if (img.complete && img.naturalHeight === 0) {
+          img.style.display = 'none';
+        }
+      });
+    }
+
+    // Add form submit listener directly - ensure it works when page is shown
+    function setupLookupForm() {
+      const lookupForm = document.querySelector('.lookup-form');
+      const submitBtn = document.getElementById('submitBtn');
+      
+      if (lookupForm && window.handleLookup) {
+        // Remove old listener if exists
+        lookupForm.removeEventListener('submit', window.handleLookup);
+        // Add new listener
+        lookupForm.addEventListener('submit', function(e) {
+          window.handleLookup(e);
+        }, false);
+      }
+      
+      // Also add click listener to button as backup
+      if (submitBtn && window.handleLookup) {
+        submitBtn.addEventListener('click', function(e) {
+          const form = this.closest('form');
+          if (form) {
+            // Trigger form submit
+            const submitEvent = new Event('submit', { bubbles: true, cancelable: true });
+            form.dispatchEvent(submitEvent);
+          }
+        });
+      }
+    }
+
+    // Initialize on DOM ready and window load
+    document.addEventListener('DOMContentLoaded', function() {
+      hideBrokenLogos();
+      setTimeout(hideBrokenLogos, 500);
+      setupLookupForm();
+      
+      // Prevent text from being hidden on click
+      document.addEventListener('click', function(e) {
+        // Don't prevent default on text elements
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+          return;
+        }
+        // Prevent unwanted text selection
+        if (!window.getSelection().toString()) {
+          e.preventDefault();
+        }
+      }, false);
+      
+      // Ensure text stays visible on touch
+      document.addEventListener('touchstart', function(e) {
+        const target = e.target;
+        // Allow normal behavior for inputs and textareas
+        if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') {
+          return;
+        }
+        
+        // Only apply transition to interactive elements
+        if (target.closest('.card-3d, .button-3d, .nav-item')) {
+          const element = target.closest('.card-3d, .button-3d, .nav-item');
+          element.style.transition = 'transform 0.1s';
+          element.style.webkitUserSelect = 'none';
+        }
+      }, { passive: true });
+
+      document.addEventListener('touchend', function(e) {
+        const target = e.target;
+        if (target.closest('.card-3d, .button-3d, .nav-item')) {
+          const element = target.closest('.card-3d, .button-3d, .nav-item');
+          setTimeout(() => {
+            element.style.transition = '';
+            element.style.webkitUserSelect = '';
+          }, 100);
+        }
+      }, { passive: true });
+    });
+    
+    // Scrollbar hiding is handled in CSS - no need for JavaScript injection
+  </script>
+</body>
+</html>
