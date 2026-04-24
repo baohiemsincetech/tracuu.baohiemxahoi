@@ -107,7 +107,7 @@
     #app {
       height: 100vh;
       width: 100%;
-      max-width: 800px;
+      max-width: 428px;
       margin: 0 auto;
       background: var(--background);
       position: relative;
@@ -1460,7 +1460,7 @@
       left: 50% !important;
       transform: translateX(-50%) !important;
       width: 100%;
-      max-width: 800px;
+      max-width: 428px;
       box-sizing: border-box;
       background: var(--surface);
       border-top: 1px solid var(--border-color);
@@ -2045,11 +2045,17 @@
       #app {
         height: 844px !important; /* iPhone 13/14 Pro height */
         max-height: 90vh !important;
+        max-width: 428px !important; /* Restore mobile proportion */
         border-radius: 2.5rem !important;
         overflow: hidden !important;
         box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 12px #ffffff, 0 0 0 16px #e2e8f0 !important;
         position: relative;
         transform: translateZ(0);
+      }
+      
+      .bottom-nav {
+        position: absolute !important;
+        bottom: 0 !important;
       }
       
       /* Make layout adhere to the rounded corners */
@@ -2063,24 +2069,16 @@
     /* Fully Responsive Layout */
     @media (min-width: 768px) {
       .home {
-        padding: 2rem !important;
+        padding: 1.5rem !important;
       }
       .bhxh-lookup {
-        padding: 2rem !important;
-        padding-bottom: 6rem !important;
+        padding: 1.5rem !important;
+        padding-bottom: 5.5rem !important;
       }
       .company-info {
-        padding: 2rem !important;
+        padding: 1.5rem !important;
       }
       
-      .stats-grid {
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)) !important;
-      }
-      
-      .home-stats {
-        grid-template-columns: repeat(3, 1fr) !important;
-      }
-
       /* Desktop center floating card style */
       body {
         background-color: #f1f5f9;
@@ -2095,10 +2093,15 @@
       #app {
         height: 90vh !important;
         max-height: 900px !important;
+        max-width: 428px !important;
         border-radius: 1.5rem !important;
         box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.05) !important;
         overflow: hidden !important;
-        margin: 2vh auto !important;
+        margin: auto !important;
+      }
+
+      .bottom-nav {
+        position: absolute !important;
       }
 
       .layout {
