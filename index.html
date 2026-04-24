@@ -343,15 +343,22 @@
     .greeting {
       font-size: 1.75rem;
       font-weight: 800;
-      background: linear-gradient(90deg, var(--primary-dark) 0%, var(--primary-color) 50%, var(--primary-dark) 100%);
-      background-size: 200% 100%;
+      
+      
+      
+      
+      
+      margin-bottom: 0.5rem;
+      
+      position: relative;
+      z-index: 1;
+      background: linear-gradient(90deg, var(--primary-dark) 0%, var(--primary-color) 40%, var(--primary-light) 50%, var(--primary-color) 60%, var(--primary-dark) 100%);
+      background-size: 200% auto;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      margin-bottom: 0.5rem;
-      animation: gradientShift 3s ease-in-out infinite;
-      position: relative;
-      z-index: 1;
+      animation: shineText 3s linear infinite;
+      filter: drop-shadow(0 4px 10px rgba(6, 182, 212, 0.3));
     }
 
     .subtitle {
@@ -559,15 +566,22 @@
     .section-title {
       font-size: 1.25rem;
       font-weight: 700;
-      background: linear-gradient(90deg, var(--primary-dark) 0%, var(--primary-color) 50%, var(--primary-dark) 100%);
-      background-size: 200% 100%;
+      
+      
+      
+      
+      
+      margin-bottom: 1rem;
+      
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid rgba(139, 92, 246, 0.2);
+      background: linear-gradient(90deg, var(--primary-dark) 0%, var(--primary-color) 40%, var(--primary-light) 50%, var(--primary-color) 60%, var(--primary-dark) 100%);
+      background-size: 200% auto;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      margin-bottom: 1rem;
-      animation: gradientShift 3s ease-in-out infinite;
-      padding-bottom: 0.5rem;
-      border-bottom: 2px solid rgba(139, 92, 246, 0.2);
+      animation: shineText 3s linear infinite;
+      filter: drop-shadow(0 4px 10px rgba(6, 182, 212, 0.3));
     }
 
     .services-list {
@@ -800,25 +814,30 @@
     .lookup-title {
       font-size: 1.25rem;
       font-weight: 700;
-      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
       margin: 0;
       line-height: 1.2;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 0.125rem;
+      filter: drop-shadow(0 4px 10px rgba(6, 182, 212, 0.3));
     }
     
     .lookup-title span {
-      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);
+      background: linear-gradient(90deg, var(--primary-dark) 0%, var(--primary-color) 40%, var(--primary-light) 50%, var(--primary-color) 60%, var(--primary-dark) 100%);
+      background-size: 200% auto;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
       display: block;
       line-height: 1.4;
+      animation: shineText 3s linear infinite;
+    }
+
+    @keyframes shineText {
+      to {
+        background-position: 200% center;
+      }
     }
 
     .lookup-title span:nth-child(1) {
@@ -826,8 +845,9 @@
     }
 
     .lookup-title span:nth-child(2) {
-      font-size: 1.6rem;
+      font-size: 1.8rem;
       font-weight: 800;
+      filter: drop-shadow(0 0 12px rgba(6, 182, 212, 0.5));
     }
 
     .lookup-subtitle {
@@ -1082,90 +1102,58 @@
     .completion-notice {
       margin-bottom: 1.25rem;
       padding: 1.25rem;
-      background: linear-gradient(135deg, #10B981 0%, #059669 100%);
       border-radius: 1rem;
-      border-left: 5px solid #34D399;
-      box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4), 0 4px 12px rgba(5, 150, 105, 0.3);
       display: flex;
       flex-direction: column;
-      gap: 0.75rem;
+      gap: 0.5rem;
       align-items: flex-start;
       position: relative;
-      overflow: visible;
-      z-index: 10;
-      opacity: 1 !important;
-      filter: none !important;
-      pointer-events: auto;
+      overflow: hidden;
+      transition: var(--transition-3d);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
     }
     
-    .completion-notice:hover,
-    .result-card:hover .completion-notice,
-    .result-content:hover .completion-notice {
-      opacity: 1 !important;
-      filter: none !important;
-      background: linear-gradient(135deg, #10B981 0%, #059669 100%) !important;
-      box-shadow: 0 10px 30px rgba(16, 185, 129, 0.5), 0 5px 15px rgba(5, 150, 105, 0.4);
+    /* Glowing rim effect */
+    .completion-notice::before {
+      content: '';
+      position: absolute;
+      top: -1px; left: -1px; right: -1px; bottom: -1px;
+      border-radius: inherit;
+      background: linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 40%, rgba(255,255,255,0) 60%, rgba(255,255,255,0.6) 100%);
+      z-index: -1;
+      opacity: 0.5;
+      transition: opacity 0.3s;
+    }
+    
+    .completion-notice:hover {
+      transform: translateY(-3px) scale(1.01);
+    }
+    
+    .completion-notice:hover::before {
+      opacity: 0.8;
     }
 
+    .notice-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
 
     .notice-icon {
       font-size: 1.5rem;
       line-height: 1;
-      display: block;
-      color: white;
-    }
-    
-    .notice-icon svg {
-      width: 1.5rem;
-      height: 1.5rem;
-    }
-
-    .notice-content {
-      flex: 1;
-      color: #FFFFFF !important;
-      position: relative;
-      z-index: 2;
-      opacity: 1 !important;
-    }
-
-    .notice-title {
-      display: none;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
     }
 
     .notice-text {
       font-size: 0.95rem;
-      line-height: 1.7;
-      color: #FFFFFF !important;
-      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
-      font-weight: 600;
-      opacity: 1 !important;
-      text-align: justify;
-      padding-left: 0.5rem;
-      padding-right: 0.5rem;
-      text-indent: 1rem;
-      width: 100%;
-    }
-    
-    .completion-notice:hover .notice-content,
-    .completion-notice:hover .notice-title,
-    .completion-notice:hover .notice-text,
-    .result-card:hover .completion-notice .notice-content,
-    .result-card:hover .completion-notice .notice-title,
-    .result-card:hover .completion-notice .notice-text {
-      color: #FFFFFF !important;
-      opacity: 1 !important;
-      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3) !important;
-      filter: none !important;
-    }
-    
-    .notice-icon {
-      opacity: 1 !important;
-    }
-    
-    .completion-notice:hover .notice-icon,
-    .result-card:hover .completion-notice .notice-icon {
-      opacity: 1 !important;
-      color: white !important;
+      line-height: 1.6;
+      font-weight: 500;
+      opacity: 0.95;
+      padding-left: 2.25rem; /* Indent to match icon */
     }
 
     /* Company Info Page */
@@ -1205,13 +1193,19 @@
     .company-title {
       font-size: 1.25rem;
       font-weight: 700;
-      background: linear-gradient(90deg, var(--primary-dark) 0%, var(--primary-color) 50%, var(--primary-dark) 100%);
-      background-size: 200% 100%;
+      
+      
+      
+      
+      
+      margin-bottom: 0.375rem;
+      background: linear-gradient(90deg, var(--primary-dark) 0%, var(--primary-color) 40%, var(--primary-light) 50%, var(--primary-color) 60%, var(--primary-dark) 100%);
+      background-size: 200% auto;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      margin-bottom: 0.375rem;
-      animation: gradientShift 3s ease-in-out infinite;
+      animation: shineText 3s linear infinite;
+      filter: drop-shadow(0 4px 10px rgba(6, 182, 212, 0.3));
     }
 
     .stats-grid {
@@ -1906,6 +1900,137 @@
         transition-duration: 0.01ms !important;
       }
     }
+  
+    .suggestions-dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background: white;
+      border: 1px solid var(--border-color);
+      border-radius: 0.5rem;
+      box-shadow: var(--shadow-lg);
+      max-height: 250px;
+      overflow-y: auto;
+      z-index: 1000;
+      margin-top: 0.25rem;
+    }
+    .suggestion-item {
+      padding: 0.85rem 1rem;
+      cursor: pointer;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background 0.2s;
+    }
+    .suggestion-item:last-child {
+      border-bottom: none;
+    }
+    .suggestion-item:hover, .suggestion-item:active {
+      background: var(--primary-ultra-light);
+    }
+    .suggestion-name {
+      font-weight: 600;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+    }
+    .suggestion-id {
+      font-size: 0.85rem;
+      color: var(--primary-dark);
+      background: rgba(139, 92, 246, 0.1);
+      padding: 0.2rem 0.5rem;
+      border-radius: 0.3rem;
+      font-weight: 600;
+    }
+  
+    /* Beautiful Lighting Effects */
+    .ambient-light-1 {
+      position: fixed;
+      top: -10%;
+      left: -10%;
+      width: 50vw;
+      height: 50vw;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(6, 182, 212, 0.15) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+      animation: floatLight1 15s ease-in-out infinite alternate;
+      filter: blur(40px);
+    }
+    
+    .ambient-light-2 {
+      position: fixed;
+      bottom: -10%;
+      right: -10%;
+      width: 60vw;
+      height: 60vw;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(139, 92, 246, 0.12) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+      animation: floatLight2 20s ease-in-out infinite alternate;
+      filter: blur(50px);
+    }
+
+    @keyframes floatLight1 {
+      0% { transform: translate(0, 0) scale(1); opacity: 0.7; }
+      100% { transform: translate(15%, 10%) scale(1.2); opacity: 1; }
+    }
+    
+    @keyframes floatLight2 {
+      0% { transform: translate(0, 0) scale(1); opacity: 0.7; }
+      100% { transform: translate(-10%, -15%) scale(1.1); opacity: 1; }
+    }
+
+    .glow-button {
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3), 0 0 0 0 rgba(6, 182, 212, 0.4);
+      animation: pulseGlow 2s infinite;
+    }
+    
+    @keyframes pulseGlow {
+      0% { box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3), 0 0 0 0 rgba(6, 182, 212, 0.4); }
+      70% { box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3), 0 0 0 10px rgba(6, 182, 212, 0); }
+      100% { box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3), 0 0 0 0 rgba(6, 182, 212, 0); }
+    }
+
+    .glow-button::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
+      transform: rotate(30deg);
+      animation: sweepLight 3s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes sweepLight {
+      0% { transform: translateX(-100%) rotate(30deg); }
+      100% { transform: translateX(100%) rotate(30deg); }
+    }
+
+    /* Add a rim light to 3D cards */
+    .card-3d {
+      position: relative;
+    }
+    .card-3d::before {
+      content: '';
+      position: absolute;
+      top: -1px; left: -1px; right: -1px; bottom: -1px;
+      border-radius: inherit;
+      background: linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 40%, rgba(255,255,255,0) 60%, rgba(6,182,212,0.3) 100%);
+      z-index: -1;
+      opacity: 0.6;
+      transition: opacity 0.3s;
+    }
+    .card-3d:hover::before {
+      opacity: 1;
+    }
   </style>
 </head>
 <body>
@@ -2046,7 +2171,7 @@
           </div>
 
           <form class="lookup-form card-3d" onsubmit="return handleLookup(event);">
-            <div class="form-group">
+            <div class="form-group" style="position: relative;">
               <label class="form-label" for="cardNumber">
                 <span style="display: inline-flex; align-items: center; gap: 0.5rem;">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2058,12 +2183,13 @@
                 </span>
               </label>
               <input type="text" id="cardNumber" name="cardNumber" class="form-input" 
-                     placeholder="Nhập mã số nhân viên" maxlength="50" />
+                     placeholder="Nhập mã số (VD: 2835) hoặc tên nhân viên" autocomplete="off" maxlength="50" />
+              <div id="suggestions" class="suggestions-dropdown hidden"></div>
             </div>
 
             <div id="errorMessage" class="error-message" style="display: none !important;"></div>
 
-            <button type="submit" class="submit-btn button-3d" id="submitBtn">
+            <button type="submit" class="submit-btn button-3d glow-button" id="submitBtn">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <circle cx="11" cy="11" r="8" />
                 <path d="m21 21-4.35-4.35" />
@@ -2309,415 +2435,104 @@
   </div>
 
   <script>
-    // ===== GOOGLE SHEETS INTEGRATION =====
-    // HƯỚNG DẪN CẤU HÌNH:
-    // BƯỚC 1: Publish Google Sheets công khai
-    //   - Mở Google Sheets: https://docs.google.com/spreadsheets/d/16hEqjJcg4QAIrSvLw65hwvfb_H4KK0qsJlXPzflkKkU/edit
-    //   - Click "Share" (Chia sẻ) ở góc trên bên phải
-    //   - Chọn "Change to anyone with the link" (Thay đổi thành bất kỳ ai có đường liên kết)
-    //   - Chọn "Viewer" (Người xem)
-    //   - Click "Done"
-    //
-    // BƯỚC 2: URL đã được cấu hình sẵn bên dưới
+    const API_URL = 'https://script.google.com/macros/s/AKfycbysHIyTFIoIeL4DMlRvKJqxyz4XPJp8Khq1TsbeY3OcjLRev6HbnddL0JQy1VS_A6fkAw/exec';
+
     
-    // Google Sheets CSV URL - Sheet ID: 16hEqjJcg4QAIrSvLw65hwvfb_H4KK0qsJlXPzflkKkU
-    const GOOGLE_SHEETS_URL = 'https://docs.google.com/spreadsheets/d/16hEqjJcg4QAIrSvLw65hwvfb_H4KK0qsJlXPzflkKkU/gviz/tq?tqx=out:csv&gid=0';
-    
-    // Cache for Google Sheets data (5 minutes)
-    let sheetsDataCache = null;
-    let lastFetchTime = 0;
-    const CACHE_DURATION = 5 * 60 * 1000;
-
-    // Improved CSV parser
-    function parseCSV(csvText) {
-      const rows = [];
-      let currentRow = [];
-      let currentValue = '';
-      let insideQuotes = false;
-      
-      for (let i = 0; i < csvText.length; i++) {
-        const char = csvText[i];
-        const nextChar = csvText[i + 1];
-        
-        if (char === '"') {
-          if (insideQuotes && nextChar === '"') {
-            currentValue += '"';
-            i++; // Skip next quote
-          } else {
-            insideQuotes = !insideQuotes;
-          }
-        } else if (char === ',' && !insideQuotes) {
-          currentRow.push(currentValue.trim());
-          currentValue = '';
-        } else if ((char === '\n' || char === '\r') && !insideQuotes) {
-          if (currentValue || currentRow.length > 0) {
-            currentRow.push(currentValue.trim());
-            if (currentRow.length > 0) {
-              rows.push(currentRow);
-            }
-            currentRow = [];
-            currentValue = '';
-          }
-          if (char === '\r' && nextChar === '\n') {
-            i++; // Skip \n after \r
-          }
-        } else {
-          currentValue += char;
-        }
-      }
-      
-      // Add last row
-      if (currentValue || currentRow.length > 0) {
-        currentRow.push(currentValue.trim());
-        if (currentRow.length > 0) {
-          rows.push(currentRow);
-        }
-      }
-      
-      return rows;
-    }
-
-    // Fetch data from Google Sheets
-    async function fetchGoogleSheetsData() {
-      const now = Date.now();
-      if (sheetsDataCache && (now - lastFetchTime) < CACHE_DURATION) {
-        return sheetsDataCache;
-      }
-
+    let employeeData = [];
+    async function fetchEmployeeData() {
       try {
-        if (!GOOGLE_SHEETS_URL || GOOGLE_SHEETS_URL === 'YOUR_GOOGLE_SHEETS_CSV_URL_HERE') {
-          throw new Error('Vui lòng cấu hình Google Sheets URL trong code');
-        }
-
-        const response = await fetch(GOOGLE_SHEETS_URL);
-        
-        if (!response.ok) {
-          throw new Error('Không thể tải dữ liệu từ Google Sheets (HTTP ' + response.status + '). Vui lòng kiểm tra lại URL và đảm bảo Google Sheets đã được publish công khai.');
-        }
-        
-        const csvText = await response.text();
-        
-        if (!csvText || csvText.trim().length === 0) {
-          throw new Error('Google Sheets trả về dữ liệu rỗng. Vui lòng kiểm tra lại Google Sheets có dữ liệu chưa.');
-        }
-        
-        const rows = parseCSV(csvText);
-        
-        // Filter out empty rows
-        const validRows = rows.filter(row => row.length > 0 && row.some(cell => cell && cell.trim() !== ''));
-        
-        if (validRows.length < 2) {
-          throw new Error('Dữ liệu Google Sheets không hợp lệ (thiếu header hoặc dữ liệu)');
-        }
-
-        // Parse header from row 1 (index 0)
-        const headers = validRows[0].map(h => h.trim().replace(/^"|"$/g, ''));
-        
-        // Check if SO_THE column exists
-        if (!headers.includes('SO_THE')) {
-          throw new Error('Google Sheets thiếu cột SO_THE. Vui lòng kiểm tra lại header ở dòng 1.');
-        }
-        
-        // Parse data rows starting from row 2 (index 1)
-        const data = [];
-        for (let i = 1; i < validRows.length; i++) {
-          const rowData = validRows[i];
-          
-          // Skip completely empty rows
-          if (rowData.length === 0 || rowData.every(cell => !cell || cell.trim() === '')) {
-            continue;
-          }
-          
-          const row = {};
-          headers.forEach((header, index) => {
-            row[header] = (rowData[index] || '').trim();
-          });
-          
-          // Only add rows that have SO_THE (card number) - data starts from row 2
-          const soThe = row.SO_THE || row['SO_THE'];
-          if (soThe && soThe.trim()) {
-            data.push(row);
+        const url = 'https://docs.google.com/spreadsheets/d/16hEqjJcg4QAIrSvLw65hwvfb_H4KK0qsJlXPzflkKkU/gviz/tq?tqx=out:csv&gid=0';
+        const response = await fetch(url);
+        const text = await response.text();
+        const rows = text.split('\n');
+        if(rows.length < 2) return;
+        const header = rows[0].split(',').map(h => h.replace(/"/g, '').trim());
+        const idxSO_THE = header.indexOf('SO_THE');
+        const idxHO_TEN = header.indexOf('HO_TEN');
+        if (idxSO_THE === -1 || idxHO_TEN === -1) return;
+        for (let i = 1; i < rows.length; i++) {
+          if (!rows[i].trim()) continue;
+          const cols = rows[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+          const sothe = (cols[idxSO_THE] || '').replace(/"/g, '').trim();
+          const hoten = (cols[idxHO_TEN] || '').replace(/"/g, '').trim();
+          if (sothe && hoten) {
+            employeeData.push({sothe, hoten});
           }
         }
-
-        if (data.length === 0) {
-          throw new Error('Không tìm thấy dữ liệu hợp lệ trong Google Sheets (không có dòng nào có SO_THE)');
-        }
-
-        sheetsDataCache = data;
-        lastFetchTime = now;
-        return data;
-      } catch (error) {
-        // Clear cache on error
-        sheetsDataCache = null;
-        lastFetchTime = 0;
-        throw error;
-      }
-    }
-
-    // Search employee by SO_THE (card number/employee ID)
-    function searchEmployee(cardNumber, data) {
-      if (!data || !Array.isArray(data)) {
-        return null;
-      }
-      
-      // Normalize search term: trim, remove spaces, uppercase
-      const normalizedSearch = cardNumber.trim().replace(/\s+/g, '').toUpperCase();
-      
-      // Search in SO_THE column (case insensitive, remove spaces)
-      return data.find(row => {
-        const soThe = (row.SO_THE || row['SO_THE'] || '').trim().replace(/\s+/g, '').toUpperCase();
-        return soThe === normalizedSearch;
-      }) || null;
-    }
-
-    // Format date from DD/MM/YYYY to display format
-    function formatDate(dateStr) {
-      if (!dateStr) return '';
-      return dateStr.trim();
-    }
-
-    // Define handleLookup function - integrated with Google Sheets
-    window.handleLookup = async function(e) {
-      if (e) {
-        e.preventDefault();
-        e.stopPropagation();
-      }
-      
-      const cardNumberInput = document.getElementById('cardNumber');
-      const errorMessage = document.getElementById('errorMessage');
-      const resultCard = document.getElementById('resultCard');
-      const submitBtn = document.getElementById('submitBtn');
-      
-      if (!cardNumberInput || !errorMessage) {
-        return false;
-      }
-      
-      const cardNumber = cardNumberInput.value.trim();
-      
-      // Hide result card first
-      if (resultCard) {
-        resultCard.classList.add('hidden');
-        resultCard.style.display = 'none';
-      }
-
-      // Validation - show error immediately if empty
-      if (!cardNumber || cardNumber.length === 0) {
-        errorMessage.textContent = '⚠️ Vui lòng nhập mã số nhân viên';
-        errorMessage.className = 'error-message';
-        errorMessage.classList.remove('hidden');
-        errorMessage.removeAttribute('hidden');
-        errorMessage.setAttribute('style', 'display: flex !important; visibility: visible !important; opacity: 1 !important;');
-        setTimeout(() => {
-          errorMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }, 50);
-        cardNumberInput.focus();
-        return false;
-      }
-
-      // Hide error if validation passes
-      errorMessage.classList.add('hidden');
-      errorMessage.style.cssText = 'display: none !important;';
-
-
-      try {
-        // Fetch data from Google Sheets
-        const sheetsData = await fetchGoogleSheetsData();
-        
-        if (!sheetsData || sheetsData.length === 0) {
-          throw new Error('Không có dữ liệu từ Google Sheets. Vui lòng kiểm tra lại cấu hình.');
-        }
-        
-        // Search for employee
-        const employee = searchEmployee(cardNumber, sheetsData);
-        
-        // Reset button
-        if (submitBtn) {
-          submitBtn.disabled = false;
-          submitBtn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" /></svg> Tra cứu';
-        }
-
-        if (!employee) {
-          // Employee not found
-          errorMessage.innerHTML = '<div class="error-message-icon">⚠️</div><div class="error-message-text">Hiện tại, cơ quan BHXH vẫn chưa hoàn tất thủ tục chốt sổ nên công ty chưa thể bàn giao hồ sơ. Bạn vui lòng chờ thêm và cập nhật trạng thái ngay trên hệ thống này.</div>';
-          errorMessage.classList.remove('hidden');
-          errorMessage.style.cssText = 'display: flex !important; visibility: visible !important; opacity: 1 !important;';
-          setTimeout(() => {
-            errorMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-          }, 50);
-          return false;
-        }
-
-        // Display result
-        if (resultCard) {
-          const statusBadge = document.getElementById('statusBadge');
-          if (statusBadge) {
-            statusBadge.className = 'status-badge status-completed';
-            statusBadge.textContent = '✅ Đã tìm thấy';
-          }
-
-          const resultContent = document.getElementById('resultContent');
-          if (resultContent) {
-            const hoTen = employee.HO_TEN || employee['HO_TEN'] || '';
-            const ngaySinh = formatDate(employee.NGAY_SINH || employee['NGAY_SINH'] || '');
-            const maSoBHXH = employee.MA_SO_BHXH || employee['MA_SO_BHXH'] || '';
-            const gioiTinh = employee.GIOI_TINH || employee['GIOI_TINH'] || '';
-            const cccd = employee.CCCD || employee['CCCD'] || '';
-            const boPhan = employee.BO_PHAN || employee['BO_PHAN'] || '';
-            const to = employee.TO || employee['TO'] || '';
-
-            resultContent.innerHTML = `
-              <div class="completion-notice">
-                <div class="notice-icon">📢</div>
-                <div class="notice-text">Công ty thông báo việc chốt sổ đã hoàn thành. Mời bạn mang theo giấy tờ tùy thân ghé bộ phận Nhân sự để nhận lại hồ sơ</div>
-              </div>
-              <div class="result-row">
-                <span class="result-label">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2.5" style="vertical-align: middle; margin-right: 0.5rem; filter: drop-shadow(0 2px 4px rgba(59, 130, 246, 0.3));">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                    <circle cx="12" cy="7" r="4"/>
-                  </svg>
-                  Họ và tên:
-                </span>
-                <span class="result-value">${hoTen || 'Chưa có thông tin'}</span>
-              </div>
-              <div class="result-row">
-                <span class="result-label">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5" style="vertical-align: middle; margin-right: 0.5rem; filter: drop-shadow(0 2px 4px rgba(16, 185, 129, 0.3));">
-                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-                    <line x1="16" y1="2" x2="16" y2="6"/>
-                    <line x1="8" y1="2" x2="8" y2="6"/>
-                    <line x1="3" y1="10" x2="21" y2="10"/>
-                  </svg>
-                  Ngày tháng năm sinh:
-                </span>
-                <span class="result-value">${ngaySinh || 'Chưa có thông tin'}</span>
-              </div>
-              <div class="result-row">
-                <span class="result-label">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#EC4899" stroke-width="2.5" style="vertical-align: middle; margin-right: 0.5rem; filter: drop-shadow(0 2px 4px rgba(236, 72, 153, 0.3));">
-                    <circle cx="12" cy="8" r="5"/>
-                    <path d="M12 13v6M9 18h6"/>
-                  </svg>
-                  Giới tính:
-                </span>
-                <span class="result-value">${gioiTinh || 'Chưa có thông tin'}</span>
-              </div>
-              <div class="result-row">
-                <span class="result-label">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2.5" style="vertical-align: middle; margin-right: 0.5rem; filter: drop-shadow(0 2px 4px rgba(245, 158, 11, 0.3));">
-                    <rect x="2" y="4" width="20" height="14" rx="2"/>
-                    <rect x="4" y="8" width="4" height="6" rx="1" fill="#F59E0B" opacity="0.3"/>
-                    <line x1="10" y1="11" x2="18" y2="11"/>
-                  </svg>
-                  Mã số BHXH:
-                </span>
-                <span class="result-value">${maSoBHXH || 'Chưa có thông tin'}</span>
-              </div>
-              <div class="result-row">
-                <span class="result-label">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#06B6D4" stroke-width="2.5" style="vertical-align: middle; margin-right: 0.5rem; filter: drop-shadow(0 2px 4px rgba(6, 182, 212, 0.3));">
-                    <rect x="2" y="4" width="20" height="14" rx="2"/>
-                    <rect x="4" y="8" width="4" height="6" rx="1" fill="#06B6D4" opacity="0.3"/>
-                    <line x1="10" y1="11" x2="18" y2="11"/>
-                  </svg>
-                  Căn cước công dân:
-                </span>
-                <span class="result-value">${cccd || 'Chưa có thông tin'}</span>
-              </div>
-              ${boPhan ? `
-              <div class="result-row">
-                <span class="result-label">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="2.5" style="vertical-align: middle; margin-right: 0.5rem; filter: drop-shadow(0 2px 4px rgba(139, 92, 246, 0.3));">
-                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-                  </svg>
-                  Bộ phận:
-                </span>
-                <span class="result-value">${boPhan}</span>
-              </div>
-              ` : ''}
-              ${to ? `
-              <div class="result-row">
-                <span class="result-label">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#14B8A6" stroke-width="2.5" style="vertical-align: middle; margin-right: 0.5rem; filter: drop-shadow(0 2px 4px rgba(20, 184, 166, 0.3));">
-                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                    <circle cx="9" cy="7" r="4"/>
-                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                  </svg>
-                  Tổ:
-                </span>
-                <span class="result-value">${to}</span>
-              </div>
-              ` : ''}
-            `;
-          }
-
-          resultCard.classList.remove('hidden');
-          resultCard.style.display = 'block';
-          setTimeout(() => {
-            resultCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-          }, 100);
-        }
-      } catch (error) {
-        // Reset button on error
-        if (submitBtn) {
-          submitBtn.disabled = false;
-          submitBtn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" /></svg> Tra cứu';
-        }
-        
-        // Show error message with details
-        const errorMsg = error.message || 'Có lỗi xảy ra khi tải dữ liệu. Vui lòng kiểm tra lại Google Sheets URL hoặc thử lại sau.';
-        errorMessage.textContent = '⚠️ ' + errorMsg;
-        errorMessage.classList.remove('hidden');
-        errorMessage.style.cssText = 'display: flex !important; visibility: visible !important; opacity: 1 !important;';
-        setTimeout(() => {
-          errorMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }, 50);
-        
-        // Log error for debugging
-        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-          console.error('Lookup error:', error);
-        }
-      }
-      
-      return false;
-    };
-    
-    // Simple initialization function
-    function initApp() {
-      try {
-        const mainLayout = document.getElementById('mainLayout');
-        const homePage = document.getElementById('homePage');
-        const bhxhPage = document.getElementById('bhxhPage');
-        const companyPage = document.getElementById('companyPage');
-        
-        // Always show main layout
-        if (mainLayout) {
-          mainLayout.classList.remove('hidden');
-          mainLayout.style.display = 'flex';
-        }
-        if (homePage) {
-          homePage.classList.remove('hidden');
-        }
-        if (bhxhPage) bhxhPage.classList.add('hidden');
-        if (companyPage) companyPage.classList.add('hidden');
-        updateNav('home');
       } catch (e) {
-        // Silent error handling
+        console.error("Lỗi tải danh sách gợi ý", e);
       }
     }
-    
-    // Run when DOM is ready
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initApp);
-    } else {
-      initApp();
-    }
-    
 
-    // Optimized page navigation - consolidated
+    function removeAccents(str) {
+      return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D');
+    }
+
+    function setupAutocomplete() {
+      const input = document.getElementById('cardNumber');
+      const suggestionsBox = document.getElementById('suggestions');
+      if (!input || !suggestionsBox) return;
+
+      input.addEventListener('input', function(e) {
+        const rawVal = e.target.value.trim();
+        const val = removeAccents(rawVal.toLowerCase());
+        
+        if (!val) {
+          suggestionsBox.classList.add('hidden');
+          return;
+        }
+        
+        let searchSothe = val;
+        if (/^\d+$/.test(val)) {
+          searchSothe = 'st' + val;
+        }
+        
+        const matches = employeeData.filter(emp => {
+          const empName = removeAccents(emp.hoten.toLowerCase());
+          const empId = emp.sothe.toLowerCase();
+          return empName.includes(val) || empId.includes(val) || empId.includes(searchSothe);
+        }).slice(0, 10);
+        
+        if (matches.length > 0) {
+          suggestionsBox.innerHTML = matches.map(emp => `
+            <div class="suggestion-item" onclick="selectSuggestion('${emp.sothe}')">
+              <span class="suggestion-name">${emp.hoten}</span>
+              <span class="suggestion-id">${emp.sothe}</span>
+            </div>
+          `).join('');
+          suggestionsBox.classList.remove('hidden');
+        } else {
+          suggestionsBox.classList.add('hidden');
+        }
+      });
+
+      document.addEventListener('click', function(e) {
+        if (!e.target.closest('#suggestions') && e.target.id !== 'cardNumber') {
+          suggestionsBox.classList.add('hidden');
+        }
+      });
+    }
+
+    window.selectSuggestion = function(sothe) {
+      document.getElementById('cardNumber').value = sothe;
+      document.getElementById('suggestions').classList.add('hidden');
+    };
+
+    
+    // Hàm định dạng ngày tháng sang chuẩn dd/mm/yyyy
+    function formatDisplayDate(dateStr) {
+      if (!dateStr) return '-';
+      
+      const d = new Date(dateStr);
+      if (!isNaN(d.getTime())) {
+        const day = String(d.getDate()).padStart(2, '0');
+        const month = String(d.getMonth() + 1).padStart(2, '0');
+        const year = d.getFullYear();
+        return `${day}/${month}/${year}`;
+      }
+      return dateStr;
+    }
+
     const pageIds = {
       mainLayout: 'mainLayout',
       homePage: 'homePage',
@@ -2735,14 +2550,12 @@
       const config = pages[page];
       if (!config) return;
       
-      // Ensure main layout is visible
       const mainLayout = document.getElementById(pageIds.mainLayout);
       if (mainLayout) {
         mainLayout.classList.remove('hidden');
         mainLayout.style.display = 'flex';
       }
       
-      // Show/hide pages
       ['homePage', 'bhxhPage', 'companyPage'].forEach(id => {
         const el = document.getElementById(pageIds[id]);
         if (el) {
@@ -2752,7 +2565,6 @@
       
       updateNav(config.nav);
       
-      // Setup form listener when BHXH page is shown
       if (page === 'bhxh') {
         setTimeout(setupLookupForm, 200);
       }
@@ -2767,39 +2579,31 @@
       const navCompany = document.getElementById('navCompany');
       const navBHXH = document.getElementById('navBHXH');
       
-      // Remove active from all
-      navHome.classList.remove('active');
-      navCompany.classList.remove('active');
-      navBHXH.classList.remove('active');
+      if (navHome) navHome.classList.remove('active');
+      if (navCompany) navCompany.classList.remove('active');
+      if (navBHXH) navBHXH.classList.remove('active');
       
-      // Add active to current
-      if (active === 'home') {
+      if (active === 'home' && navHome) {
         navHome.classList.add('active');
-      } else if (active === 'company') {
+      } else if (active === 'company' && navCompany) {
         navCompany.classList.add('active');
-      } else if (active === 'bhxh') {
-        // BHXH button doesn't need active state as it's always purple
       }
     }
 
     function toggleTimeline() {
       const container = document.getElementById('timelineContainer');
       const toggleText = document.getElementById('timelineToggleText');
+      if (!container) return;
       
       if (container.classList.contains('expanded')) {
         container.classList.remove('expanded');
-        toggleText.textContent = 'Xem chi tiết lịch sử';
+        if (toggleText) toggleText.textContent = 'Xem chi tiết lịch sử';
       } else {
         container.classList.add('expanded');
-        toggleText.textContent = 'Ẩn chi tiết lịch sử';
+        if (toggleText) toggleText.textContent = 'Ẩn chi tiết lịch sử';
       }
     }
 
-
-
-    // Function already attached to window above
-
-    // Hide broken logo images - single consolidated function
     function hideBrokenLogos() {
       document.querySelectorAll('.logo-image').forEach(img => {
         img.onerror = () => img.style.display = 'none';
@@ -2809,60 +2613,64 @@
       });
     }
 
-    // Add form submit listener directly - ensure it works when page is shown
     function setupLookupForm() {
-      const lookupForm = document.querySelector('.lookup-form');
+      // Event listeners are handled via HTML onsubmit attribute.
+      // We don't need to add redundant listeners here which cause multiple concurrent requests.
       const submitBtn = document.getElementById('submitBtn');
-      
-      if (lookupForm && window.handleLookup) {
-        // Remove old listener if exists
-        lookupForm.removeEventListener('submit', window.handleLookup);
-        // Add new listener
-        lookupForm.addEventListener('submit', function(e) {
-          window.handleLookup(e);
-        }, false);
-      }
-      
-      // Also add click listener to button as backup
       if (submitBtn && window.handleLookup) {
-        submitBtn.addEventListener('click', function(e) {
-          const form = this.closest('form');
-          if (form) {
-            // Trigger form submit
-            const submitEvent = new Event('submit', { bubbles: true, cancelable: true });
-            form.dispatchEvent(submitEvent);
-          }
-        });
+        // Just directly call handleLookup if button clicked (avoiding event bubbling issues)
+        submitBtn.onclick = function(e) {
+          e.preventDefault();
+          window.handleLookup(e);
+        };
       }
     }
 
-    // Initialize on DOM ready and window load
+    function initApp() {
+      try {
+        const mainLayout = document.getElementById('mainLayout');
+        const homePage = document.getElementById('homePage');
+        const bhxhPage = document.getElementById('bhxhPage');
+        const companyPage = document.getElementById('companyPage');
+        
+        if (mainLayout) {
+          mainLayout.classList.remove('hidden');
+          mainLayout.style.display = 'flex';
+        }
+        if (homePage) {
+          homePage.classList.remove('hidden');
+        }
+        if (bhxhPage) bhxhPage.classList.add('hidden');
+        if (companyPage) companyPage.classList.add('hidden');
+        updateNav('home');
+        fetchEmployeeData();
+        setupAutocomplete();
+      } catch (e) {}
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initApp);
+    } else {
+      initApp();
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
       hideBrokenLogos();
       setTimeout(hideBrokenLogos, 500);
       setupLookupForm();
       
-      // Prevent text from being hidden on click
       document.addEventListener('click', function(e) {
-        // Don't prevent default on text elements
         if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
           return;
         }
-        // Prevent unwanted text selection
-        if (!window.getSelection().toString()) {
-          e.preventDefault();
-        }
       }, false);
       
-      // Ensure text stays visible on touch
       document.addEventListener('touchstart', function(e) {
         const target = e.target;
-        // Allow normal behavior for inputs and textareas
         if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') {
           return;
         }
         
-        // Only apply transition to interactive elements
         if (target.closest('.card-3d, .button-3d, .nav-item')) {
           const element = target.closest('.card-3d, .button-3d, .nav-item');
           element.style.transition = 'transform 0.1s';
@@ -2881,8 +2689,172 @@
         }
       }, { passive: true });
     });
-    
-    // Scrollbar hiding is handled in CSS - no need for JavaScript injection
-  </script>
+
+    let currentRequestId = 0;
+    window.handleLookup = async function(e) {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      const requestId = ++currentRequestId;
+      
+      const input = document.getElementById('cardNumber');
+      const errorMessage = document.getElementById('errorMessage');
+      const resultCard = document.getElementById('resultCard');
+      const submitBtn = document.getElementById('submitBtn');
+      const resultContent = document.getElementById('resultContent');
+      const statusBadge = document.getElementById('statusBadge');
+      
+      if (!input || !errorMessage) return false;
+      
+      let term = input.value.trim().toUpperCase();
+      if (/^\d+$/.test(term)) {
+        term = 'ST' + term;
+        input.value = term;
+      }
+      
+      if (resultCard) {
+        resultCard.classList.add('hidden');
+        resultCard.style.display = 'none';
+      }
+
+      if (!term || term.length === 0) {
+        errorMessage.textContent = '⚠️ Vui lòng nhập mã số nhân viên';
+        errorMessage.className = 'error-message';
+        errorMessage.classList.remove('hidden');
+        errorMessage.style.cssText = 'display: flex !important; visibility: visible !important; opacity: 1 !important;';
+        setTimeout(() => { errorMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 50);
+        input.focus();
+        return false;
+      }
+
+      errorMessage.classList.add('hidden');
+      errorMessage.style.cssText = 'display: none !important;';
+      
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" /></svg> Đang kiểm tra...';
+      }
+
+      try {
+        const res = await fetch(`${API_URL}?sothe=${term}`);
+        const responseData = await res.json();
+
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" /></svg> Tra cứu';
+        }
+
+        if (!responseData.success) {
+          if (requestId !== currentRequestId) return; // Bỏ qua nếu có request mới hơn
+          if (resultCard) {
+            resultCard.classList.add('hidden');
+            resultCard.style.display = 'none';
+          }
+          errorMessage.innerHTML = '<div class="error-message-icon">⚠️</div><div class="error-message-text">Hiện tại, cơ quan BHXH vẫn chưa hoàn tất thủ tục chốt sổ cho trường hợp này. Bạn vui lòng quay lại sau.</div>';
+          errorMessage.classList.remove('hidden');
+          errorMessage.style.cssText = 'display: flex !important; visibility: visible !important; opacity: 1 !important;';
+          setTimeout(() => { errorMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 50);
+        } else {
+          if (requestId !== currentRequestId) return; // Bỏ qua nếu có request mới hơn
+          errorMessage.classList.add('hidden');
+          errorMessage.style.cssText = 'display: none !important;';
+          const emp = responseData.data;
+          const isDaNhan = (emp.danhan || '').toUpperCase() === 'TRUE' || (emp.ghichu || '').toLowerCase().includes('đã nhận');
+
+          if (statusBadge) {
+            statusBadge.className = 'status-badge status-completed';
+            statusBadge.textContent = '✅ Đã tìm thấy';
+          }
+
+          let noticeHtml = '';
+          if (isDaNhan) {
+            noticeHtml = `
+              <div class="completion-notice" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(37, 99, 235, 0.05)); border: 1px solid rgba(59, 130, 246, 0.3); border-left: 4px solid #3B82F6; box-shadow: 0 8px 25px rgba(59, 130, 246, 0.15);">
+                <div class="notice-header" style="color: var(--primary-dark);">
+                  <span class="notice-icon">✅</span> Hồ sơ của bạn đã được bàn giao
+                </div>
+                <div class="notice-text" style="color: var(--text-secondary);">
+                  Trạng thái: <strong>${emp.ghichu || 'Đã bàn giao'}</strong>
+                </div>
+              </div>
+            `;
+          } else {
+            noticeHtml = `
+              <div class="completion-notice" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.05)); border: 1px solid rgba(16, 185, 129, 0.3); border-left: 4px solid #10B981; box-shadow: 0 8px 25px rgba(16, 185, 129, 0.15);">
+                <div class="notice-header" style="color: #047857;">
+                  <span class="notice-icon">📢</span> Việc chốt sổ đã hoàn thành!
+                </div>
+                <div class="notice-text" style="color: var(--text-secondary);">
+                  Mời bạn mang theo giấy tờ tùy thân ghé bộ phận Nhân sự để nhận lại hồ sơ.
+                </div>
+              </div>
+            `;
+          }
+
+          if (resultContent) {
+            resultContent.innerHTML = `
+              ${noticeHtml}
+              <div class="result-row">
+                <span class="result-label">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2.5" style="vertical-align: middle; margin-right: 0.5rem; filter: drop-shadow(0 2px 4px rgba(59, 130, 246, 0.3));">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                    <circle cx="12" cy="7" r="4"/>
+                  </svg>
+                  Họ và tên:
+                </span>
+                <span class="result-value">${emp.hovaten || '-'}</span>
+              </div>
+              <div class="result-row">
+                <span class="result-label">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5" style="vertical-align: middle; margin-right: 0.5rem; filter: drop-shadow(0 2px 4px rgba(16, 185, 129, 0.3));">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                    <line x1="16" y1="2" x2="16" y2="6"/>
+                    <line x1="8" y1="2" x2="8" y2="6"/>
+                    <line x1="3" y1="10" x2="21" y2="10"/>
+                  </svg>
+                  Ngày sinh:
+                </span>
+                <span class="result-value">${formatDisplayDate(emp.namsinh)}</span>
+              </div>
+              <div class="result-row">
+                <span class="result-label">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2.5" style="vertical-align: middle; margin-right: 0.5rem; filter: drop-shadow(0 2px 4px rgba(245, 158, 11, 0.3));">
+                    <rect x="2" y="4" width="20" height="14" rx="2"/>
+                    <rect x="4" y="8" width="4" height="6" rx="1" fill="#F59E0B" opacity="0.3"/>
+                    <line x1="10" y1="11" x2="18" y2="11"/>
+                  </svg>
+                  Mã số BHXH:
+                </span>
+                <span class="result-value">${emp.sobhxh || '-'}</span>
+              </div>
+            `;
+          }
+
+          if (resultCard) {
+            resultCard.classList.remove('hidden');
+            resultCard.style.display = 'block';
+            setTimeout(() => { resultCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 100);
+          }
+        }
+      } catch (err) {
+        if (requestId !== currentRequestId) return; // Bỏ qua nếu có request mới hơn
+        if (resultCard) {
+          resultCard.classList.add('hidden');
+          resultCard.style.display = 'none';
+        }
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" /></svg> Tra cứu';
+        }
+        errorMessage.innerHTML = '<div class="error-message-icon">⚠️</div><div class="error-message-text">Lỗi kết nối máy chủ Google. Vui lòng kiểm tra mạng và thử lại.</div>';
+        errorMessage.classList.remove('hidden');
+        errorMessage.style.cssText = 'display: flex !important; visibility: visible !important; opacity: 1 !important;';
+        setTimeout(() => { errorMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 50);
+      }
+      
+      return false;
+    };
+</script>
 </body>
 </html>
