@@ -107,7 +107,7 @@
     #app {
       height: 100vh;
       width: 100%;
-      max-width: 428px;
+      max-width: 800px;
       margin: 0 auto;
       background: var(--background);
       position: relative;
@@ -1460,7 +1460,7 @@
       left: 50% !important;
       transform: translateX(-50%) !important;
       width: 100%;
-      max-width: 428px;
+      max-width: 800px;
       box-sizing: border-box;
       background: var(--surface);
       border-top: 1px solid var(--border-color);
@@ -2031,6 +2031,81 @@
     .card-3d:hover::before {
       opacity: 1;
     }
+  
+    /* Responsive Desktop Constraints */
+    @media (min-width: 429px) {
+      body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #cbd5e1; /* Subtle grey background for desktop */
+        background-image: radial-gradient(#94a3b8 1px, transparent 1px);
+        background-size: 20px 20px;
+      }
+      #app {
+        height: 844px !important; /* iPhone 13/14 Pro height */
+        max-height: 90vh !important;
+        border-radius: 2.5rem !important;
+        overflow: hidden !important;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 12px #ffffff, 0 0 0 16px #e2e8f0 !important;
+        position: relative;
+        transform: translateZ(0);
+      }
+      
+      /* Make layout adhere to the rounded corners */
+      .layout {
+        height: 100% !important;
+        border-radius: 2.5rem;
+      }
+    }
+
+  
+    /* Fully Responsive Layout */
+    @media (min-width: 768px) {
+      .home {
+        padding: 2rem !important;
+      }
+      .bhxh-lookup {
+        padding: 2rem !important;
+        padding-bottom: 6rem !important;
+      }
+      .company-info {
+        padding: 2rem !important;
+      }
+      
+      .stats-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)) !important;
+      }
+      
+      .home-stats {
+        grid-template-columns: repeat(3, 1fr) !important;
+      }
+
+      /* Desktop center floating card style */
+      body {
+        background-color: #f1f5f9;
+        background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+        background-size: 24px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+      }
+      
+      #app {
+        height: 90vh !important;
+        max-height: 900px !important;
+        border-radius: 1.5rem !important;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.05) !important;
+        overflow: hidden !important;
+        margin: 2vh auto !important;
+      }
+
+      .layout {
+        border-radius: 1.5rem;
+      }
+    }
+
   </style>
 </head>
 <body>
