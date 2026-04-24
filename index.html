@@ -1901,48 +1901,7 @@
       }
     }
   
-    .suggestions-dropdown {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      width: 100%;
-      background: white;
-      border: 1px solid var(--border-color);
-      border-radius: 0.5rem;
-      box-shadow: var(--shadow-lg);
-      max-height: 250px;
-      overflow-y: auto;
-      z-index: 1000;
-      margin-top: 0.25rem;
-    }
-    .suggestion-item {
-      padding: 0.85rem 1rem;
-      cursor: pointer;
-      border-bottom: 1px solid var(--border-color);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      transition: background 0.2s;
-    }
-    .suggestion-item:last-child {
-      border-bottom: none;
-    }
-    .suggestion-item:hover, .suggestion-item:active {
-      background: var(--primary-ultra-light);
-    }
-    .suggestion-name {
-      font-weight: 600;
-      color: var(--text-primary);
-      font-size: 0.95rem;
-    }
-    .suggestion-id {
-      font-size: 0.85rem;
-      color: var(--primary-dark);
-      background: rgba(139, 92, 246, 0.1);
-      padding: 0.2rem 0.5rem;
-      border-radius: 0.3rem;
-      font-weight: 600;
-    }
+    /* (removed) autocomplete suggestions dropdown */
   
     /* Beautiful Lighting Effects */
     .ambient-light-1 {
@@ -2248,7 +2207,7 @@
             <p class="lookup-subtitle">Nhập mã số nhân viên để tra cứu thông tin</p>
           </div>
 
-          <form class="lookup-form card-3d" onsubmit="return handleLookup(event);">
+          <form id="lookupForm" class="lookup-form card-3d">
             <div class="form-group" style="position: relative;">
               <label class="form-label" for="cardNumber">
                 <span style="display: inline-flex; align-items: center; gap: 0.5rem;">
@@ -2262,7 +2221,6 @@
               </label>
               <input type="text" id="cardNumber" name="cardNumber" class="form-input" 
                      placeholder="Nhập mã số (VD: 2835) hoặc tên nhân viên" autocomplete="off" maxlength="50" />
-              <div id="suggestions" class="suggestions-dropdown hidden"></div>
             </div>
 
             <div id="errorMessage" class="error-message" style="display: none !important;"></div>
@@ -2515,88 +2473,6 @@
   <script>
     const API_URL = 'https://script.google.com/macros/s/AKfycbysHIyTFIoIeL4DMlRvKJqxyz4XPJp8Khq1TsbeY3OcjLRev6HbnddL0JQy1VS_A6fkAw/exec';
 
-    
-    let employeeData = [];
-    async function fetchEmployeeData() {
-      try {
-        const url = 'https://docs.google.com/spreadsheets/d/16hEqjJcg4QAIrSvLw65hwvfb_H4KK0qsJlXPzflkKkU/gviz/tq?tqx=out:csv&gid=0';
-        const response = await fetch(url);
-        const text = await response.text();
-        const rows = text.split('\n');
-        if(rows.length < 2) return;
-        const header = rows[0].split(',').map(h => h.replace(/"/g, '').trim());
-        const idxSO_THE = header.indexOf('SO_THE');
-        const idxHO_TEN = header.indexOf('HO_TEN');
-        if (idxSO_THE === -1 || idxHO_TEN === -1) return;
-        for (let i = 1; i < rows.length; i++) {
-          if (!rows[i].trim()) continue;
-          const cols = rows[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
-          const sothe = (cols[idxSO_THE] || '').replace(/"/g, '').trim();
-          const hoten = (cols[idxHO_TEN] || '').replace(/"/g, '').trim();
-          if (sothe && hoten) {
-            employeeData.push({sothe, hoten});
-          }
-        }
-      } catch (e) {
-        console.error("Lỗi tải danh sách gợi ý", e);
-      }
-    }
-
-    function removeAccents(str) {
-      return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D');
-    }
-
-    function setupAutocomplete() {
-      const input = document.getElementById('cardNumber');
-      const suggestionsBox = document.getElementById('suggestions');
-      if (!input || !suggestionsBox) return;
-
-      input.addEventListener('input', function(e) {
-        const rawVal = e.target.value.trim();
-        const val = removeAccents(rawVal.toLowerCase());
-        
-        if (!val) {
-          suggestionsBox.classList.add('hidden');
-          return;
-        }
-        
-        let searchSothe = val;
-        if (/^\d+$/.test(val)) {
-          searchSothe = 'st' + val;
-        }
-        
-        const matches = employeeData.filter(emp => {
-          const empName = removeAccents(emp.hoten.toLowerCase());
-          const empId = emp.sothe.toLowerCase();
-          return empName.includes(val) || empId.includes(val) || empId.includes(searchSothe);
-        }).slice(0, 10);
-        
-        if (matches.length > 0) {
-          suggestionsBox.innerHTML = matches.map(emp => `
-            <div class="suggestion-item" onclick="selectSuggestion('${emp.sothe}')">
-              <span class="suggestion-name">${emp.hoten}</span>
-              <span class="suggestion-id">${emp.sothe}</span>
-            </div>
-          `).join('');
-          suggestionsBox.classList.remove('hidden');
-        } else {
-          suggestionsBox.classList.add('hidden');
-        }
-      });
-
-      document.addEventListener('click', function(e) {
-        if (!e.target.closest('#suggestions') && e.target.id !== 'cardNumber') {
-          suggestionsBox.classList.add('hidden');
-        }
-      });
-    }
-
-    window.selectSuggestion = function(sothe) {
-      document.getElementById('cardNumber').value = sothe;
-      document.getElementById('suggestions').classList.add('hidden');
-    };
-
-    
     // Hàm định dạng ngày tháng sang chuẩn dd/mm/yyyy
     function formatDisplayDate(dateStr) {
       if (!dateStr) return '-';
@@ -2692,16 +2568,17 @@
     }
 
     function setupLookupForm() {
-      // Event listeners are handled via HTML onsubmit attribute.
-      // We don't need to add redundant listeners here which cause multiple concurrent requests.
-      const submitBtn = document.getElementById('submitBtn');
-      if (submitBtn && window.handleLookup) {
-        // Just directly call handleLookup if button clicked (avoiding event bubbling issues)
-        submitBtn.onclick = function(e) {
-          e.preventDefault();
-          window.handleLookup(e);
-        };
-      }
+      // Ensure "Tra cứu" works with a single click/tap by binding once.
+      const form = document.getElementById('lookupForm');
+      if (!form || !window.handleLookup) return;
+      if (form.dataset.bound === '1') return;
+      form.dataset.bound = '1';
+
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        window.handleLookup(e);
+      });
     }
 
     function initApp() {
@@ -2721,8 +2598,6 @@
         if (bhxhPage) bhxhPage.classList.add('hidden');
         if (companyPage) companyPage.classList.add('hidden');
         updateNav('home');
-        fetchEmployeeData();
-        setupAutocomplete();
       } catch (e) {}
     }
 
